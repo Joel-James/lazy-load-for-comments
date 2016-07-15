@@ -33,7 +33,7 @@ class LLC_Admin {
 
         add_settings_field(
             'lazy_load_comments_label',
-            '<label for="lazy_load_comments">' . __( 'Lazy Load Comments', F_LOGGEDIN_DOMAIN ) . '</label>',
+            '<label for="lazy_load_comments">' . __( 'Lazy Load Comments', LLC_DOMAIN ) . '</label>',
             array( &$this, 'fields' ),
             'discussion'
         );
@@ -58,7 +58,7 @@ class LLC_Admin {
         echo '<option value="1" ' . selected( $value, 1, false ) . '>On Click</option>';
         echo '<option value="0" ' . selected( $value, 0, false ) . '>No Lazy Load</option>';
         echo '</select>';
-        echo '<p class="description">' . __( 'How you want to load the comments.', F_LOGGEDIN_DOMAIN ) . '</p>';
+        echo '<p class="description">' . __( 'How you want to load the comments.', LLC_DOMAIN ) . '</p>';
     }
 
 }
