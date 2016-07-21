@@ -158,7 +158,7 @@ class LLC_Public {
             return false;
         }
         // If comments are not available, abort.
-        if ( ! ( have_comments() && 'open' == $post->comment_status ) ) {
+        if ( ! ( have_comments() || 'open' == $post->comment_status ) ) {
             return false; 
         }
         // If the visitor is not real user, abort.
