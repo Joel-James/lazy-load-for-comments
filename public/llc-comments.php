@@ -17,6 +17,7 @@ if ( ! defined( 'WPINC' ) ) {
 ?>
 <input type="hidden" name="llc_ajax_url" id="llc_ajax_url" value="<?php echo admin_url( 'admin-ajax.php' ); ?>" />
 <input type="hidden" name="llc_post_id" id="llc_post_id" value="<?php echo get_the_ID(); ?>" />
+<input type="hidden" name="llc_ajax_nonce" id="llc_ajax_nonce" value="<?php echo wp_create_nonce( "llc-ajax-nonce" ); ?>" />
 <div id="llc_comments">
     <div  align="center">
         <?php if ( get_option( 'lazy_load_comments', 1 ) == 1 ) { ?>

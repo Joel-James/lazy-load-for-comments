@@ -31,7 +31,8 @@
             
             var data = {
                 'action': 'llc_load_comments',
-                'post': $( '#llc_post_id' ).val()
+                'post': $( '#llc_post_id' ).val(),
+                'llc_ajax_nonce': $( '#llc_ajax_nonce' ).val()
             };
             var rect = document.getElementById('llc_comments').getBoundingClientRect();
             var ajaxurl = $( '#llc_ajax_url' ).val();

@@ -48,20 +48,14 @@ class LLC_Public {
      */
     public function comments_script() {
 
-        global $post;
-        
-        // Load only when required
-        if ( ! is_singular() ) {
+        // Do not load scripts to page if lazy load can not work.
+        if ( ! $this->can_lazy_load() ) {
             return;
         }
         
-        $lazy_load = get_option( 'lazy_load_comments', 1 );
-        // If Lazy load is disabled, abort
-        if ( $lazy_load == 0 ) {
-            return;
-        }
         // Get the lazy load script according to user choice.
-        $file = ( $lazy_load == 2 ) ? 'llc_scroll.js' : 'llc_click.js';
+        $file = ( get_option( 'lazy_load_comments', 1 ) == 2 ) ? 'llc_scroll.js' : 'llc_click.js';
+        // Enqueue the script file.
         wp_enqueue_script(
             LLC_NAME,
             LLC_PATH . '/public/js/' . $file,
@@ -83,6 +77,9 @@ class LLC_Public {
      * @return string html content
      */
     public function comments_content() {
+        
+        // Security check.
+        check_ajax_referer( 'llc-ajax-nonce', 'llc_ajax_nonce' );
         
         // If post/page id not found in request, abort.
         if ( empty( $id = $_REQUEST['post'] ) ) {
