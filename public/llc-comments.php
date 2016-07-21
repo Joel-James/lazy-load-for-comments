@@ -20,7 +20,7 @@ if ( ! defined( 'WPINC' ) ) {
 <div id="llc_comments">
     <div  align="center">
         <?php if ( get_option( 'lazy_load_comments', 1 ) == 1 ) { ?>
-            <button id="llc_comments_button" class="btn">Load Comments</button>
+            <button id="llc_comments_button" class="btn"><?php _e( 'Load Comments', LLC_DOMAIN ); ?></button>
         <?php } ?>
     </div>
 </div>

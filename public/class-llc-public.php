@@ -89,17 +89,19 @@ class LLC_Public {
         
         // If post/page id not found in request, abort
         if ( empty( $id = $_REQUEST['post'] ) ) {
-            wp_die();
+            die();
         }
-
+        
         query_posts( array( 'p' => $id, 'post_type' => 'any' ) );
         
         if ( have_posts() ) {
             the_post();
+            remove_filter( 'comments_template', array( $this, 'llc_template' ) );
             comments_template();
+            exit();
         }
         
-        wp_die();
+        die();
     }
     
     /**
