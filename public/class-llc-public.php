@@ -34,7 +34,7 @@ class LLC_Public {
         
         $lazy_load = get_option( 'lazy_load_comments', 1 );
         
-        if ( ! ( is_singular() && ( have_comments() || 'open' == $post->comment_status ) && 0 != $lazy_load ) ) {
+        if ( ! $this->can_lazy_load() ) {
             return $comment_template;
         }
         
@@ -102,6 +102,74 @@ class LLC_Public {
         }
         
         die();
+    }
+    
+    /**
+     * Check if real user is visiting.
+     * 
+     * This function is used to check if the visitor
+     * is a real user or some bots. We don't need to
+     * lazy load the comments if bots are the visitors.
+     * This can help SEO for comments.
+     * We decide this based on user's browser.
+     * 
+     * @global bool $is_gecko
+     * @global bool $is_opera
+     * @global bool $is_safari
+     * @global bool $is_chrome
+     * @global bool $is_IE
+     * @global bool $is_edge
+     * @global bool $is_NS4
+     * @global bool $is_lynx
+     * 
+     * @since  1.0.0
+     * @access private
+     * 
+     * @return boolean If real user or not.
+     */
+    private function is_real_user() {
+        
+        // If mobile OS is found it is real user
+        if ( wp_is_mobile() ) {
+            return true;
+        }
+        
+        global $is_gecko, $is_opera, $is_safari, $is_chrome, $is_IE, $is_edge, $is_NS4, $is_lynx;
+        
+        return $is_gecko || $is_opera || $is_safari || $is_chrome || $is_IE || $is_edge || $is_NS4 || $is_lynx;        
+    }
+
+    /**
+     * Check if it is OK to lazy load comments.
+     * 
+     * We will continue only if lazy loading enabled,
+     * single post/page is being displayed, comment is
+     * available on the page or the visitor is not a bot.
+     * 
+     * @since  1.0.0
+     * @access private
+     * 
+     * @return boolean
+     */
+    private function can_lazy_load() {
+        
+        if ( 0 == $lazy_load ) {
+            return false;
+        }
+        
+        if ( ! is_singular() ) {
+            return false;
+        }
+        
+        if ( ! ( have_comments() && 'open' == $post->comment_status ) ) {
+            return false; 
+        }
+        
+        if ( ! $this->is_real_user() ) {
+            return false;
+        }
+        
+        return true;
     }
 
 }
