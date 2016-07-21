@@ -29,11 +29,8 @@ class LLC_Public {
      * @return file
      */
     public function llc_template( $comment_template ) {
-        
-        global $post;
-        
-        $lazy_load = get_option( 'lazy_load_comments', 1 );
-        
+
+        // Load default comment template if lazy load can not work.
         if ( ! $this->can_lazy_load() ) {
             return $comment_template;
         }
@@ -87,11 +84,11 @@ class LLC_Public {
      */
     public function comments_content() {
         
-        // If post/page id not found in request, abort
+        // If post/page id not found in request, abort.
         if ( empty( $id = $_REQUEST['post'] ) ) {
             die();
         }
-        
+        // Query through posts.
         query_posts( array( 'p' => $id, 'post_type' => 'any' ) );
         
         if ( have_posts() ) {
@@ -152,19 +149,22 @@ class LLC_Public {
      * @return boolean
      */
     private function can_lazy_load() {
+      
+        global $post;
         
-        if ( 0 == $lazy_load ) {
+        // If lazy loading is not enabled, abort.
+        if ( 0 == get_option( 'lazy_load_comments', 1 ) ) {
             return false;
         }
-        
+        // If not on singular page, abort.
         if ( ! is_singular() ) {
             return false;
         }
-        
+        // If comments are not available, abort.
         if ( ! ( have_comments() && 'open' == $post->comment_status ) ) {
             return false; 
         }
-        
+        // If the visitor is not real user, abort.
         if ( ! $this->is_real_user() ) {
             return false;
         }
