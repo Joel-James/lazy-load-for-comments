@@ -27,7 +27,7 @@
     $(function() {
         var llcLoaded = 0;
         // Load comments data
-        window.onscroll = function () {
+        $( window ).scroll( function() {
             
             var data = {
                 'action': 'llc_load_comments',
@@ -41,12 +41,11 @@
                 $.post( ajaxurl, data, function( response ) {
                     if ( response !== '' ) {
                         $( '#llc_comments' ).html( response );
-                        llcLoaded = 1;
                     }
                     
                 });
-                window.onscroll = null;
+                llcLoaded = 1;
             }
-        }
+        });
     });
 })(jQuery);
