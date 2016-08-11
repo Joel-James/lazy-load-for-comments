@@ -19,7 +19,7 @@ if ( ! defined( 'WPINC' ) ) {
 <input type="hidden" name="llc_post_id" id="llc_post_id" value="<?php echo get_the_ID(); ?>" />
 <input type="hidden" name="llc_ajax_nonce" id="llc_ajax_nonce" value="<?php echo wp_create_nonce( "llc-ajax-nonce" ); ?>" />
 <div id="llc_comments">
-    <div  align="center">
+    <div align="center" id="comments">
         <?php if ( get_option( 'lazy_load_comments', 1 ) == 1 ) { ?>
             <button id="llc_comments_button" class="btn"><?php _e( 'Load Comments', LLC_DOMAIN ); ?></button>
         <?php } ?>
