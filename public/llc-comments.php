@@ -10,9 +10,9 @@ if ( ! defined( 'WPINC' ) ) {
  * @category   HTML
  * @package    LLC
  * @subpackage Public
- * @author     Joel James <j@thefoxe.com>
+ * @author     Joel James <mail@cjoel.com>
  * @license    http://www.gnu.org/licenses/ GNU General Public License
- * @link       https://thefoxe.com/products/lazy-load-comments/
+ * @link       https://duckdev.com/products/lazy-load-comments/
  */
 ?>
 <input type="hidden" name="llc_ajax_url" id="llc_ajax_url" value="<?php echo admin_url( 'admin-ajax.php' ); ?>" />

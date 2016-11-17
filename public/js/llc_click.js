@@ -47,7 +47,7 @@
                     } else {
                         $( '#llc_comments' ).html( '<h4 style="color: red;">Error occurred. Please reload this page.</h4>' );
                     }
-                },
+                }
             });
         });
     });

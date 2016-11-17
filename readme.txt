@@ -1,9 +1,9 @@
 === Lazy Load for Comments ===
 Contributors: joelcj91,foxe
 Tags: lazy load, lazy comments, conditional comments, lazyload comments, lazyload wordpress comments, comments
-Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=XUVWY8HUBUXY4
+Donate link: https://paypal.me/JoelCJ
 Requires at least: 4.0
-Tested up to: 4.5.3
+Tested up to: 4.7
 Stable tag: 1.0.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -46,7 +46,7 @@ Lazy load WordPress commenting system and get improved page loading speed. Very 
 Feel free to [open a support request](http://wordpress.org/support/plugin/lazy-load-for-comments/).
 
 = Missing something? =
-If you would like to have an additional feature for this plugin, [let me know](http://thefoxe.com/support/)
+If you would like to have an additional feature for this plugin, [let me know](https://duckdev.com/support/)
 
 == Frequently Asked Questions ==
 
@@ -64,7 +64,7 @@ Please [open a support request](http://wordpress.org/support/plugin/lazy-load-fo
 
 = Bug Reports =
 
-Bug reports for 404 to 301 are always welcome. [Report here](https://thefoxe.com/bug-report/).
+Bug reports are always welcome. [Report here](https://duckdev.com/support/).
 
 
 == Screenshots ==
@@ -74,12 +74,12 @@ Bug reports for 404 to 301 are always welcome. [Report here](https://thefoxe.com
 
 == Changelog ==
 
-= 1.0.0 (21/07/2016) =
+= 1.0.0 (18/11/2016) =
 
 - First version.
 
 == Upgrade Notice ==
 
-= 1.0.0 (21/07/2016) =
+= 1.0.0 (18/11/2016) =
 
 - First version.

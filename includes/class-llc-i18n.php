@@ -9,9 +9,9 @@
  * @category   Core
  * @package    LLC
  * @subpackage Internationalization
- * @author     Joel James <j@thefoxe.com>
+ * @author     Joel James <mail@cjoel.com>
  * @license    http://www.gnu.org/licenses/ GNU General Public License
- * @link       https://thefoxe.com/products/lazy-load-comments/
+ * @link       https://duckdev.com/products/lazy-load-comments/
  */
 class LLC_I18n {
 
@@ -43,8 +43,6 @@ class LLC_I18n {
 
     /**
      * Set the domain equal to that of the specified domain.
-     *
-     * @param string $domain The domain that represents the locale of this plugin.
      * 
      * @since  1.0.0
      * @access public

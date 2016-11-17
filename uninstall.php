@@ -8,9 +8,9 @@
  * @category   Core
  * @package    LLC
  * @subpackage Uninstaller
- * @author     Joel James <j@thefoxe.com>
+ * @author     Joel James <mail@cjoel.com>
  * @license    http://www.gnu.org/licenses/ GNU General Public License
- * @link       https://thefoxe.com/products/lazy-load-comments/
+ * @link       https://duckdev.com/products/lazy-load-comments/
  */
 // If uninstall not called from WordPress, then exit. That's it!
 

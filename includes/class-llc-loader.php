@@ -15,9 +15,9 @@ if ( ! defined( 'WPINC' ) ) {
  * @category   Core
  * @package    LFC
  * @subpackage Loader
- * @author     Joel James <j@thefoxe.com>
+ * @author     Joel James <mail@cjoel.com>
  * @license    http://www.gnu.org/licenses/ GNU General Public License
- * @link       https://thefoxe.com/products/lazy-facebook-comments/
+ * @link       https://duckdev.com/products/lazy-facebook-comments/
  */
 class LLC_Loader {
 
@@ -119,7 +119,7 @@ class LLC_Loader {
      * @since  1.0.0
      * @access private
      * 
-     * @return The collection of actions and filters registered with WordPress.
+     * @return array The collection of actions and filters registered with WordPress.
      */
     private function add( $hooks, $hook, $component, $callback, $priority, $accepted_args ) {
 
