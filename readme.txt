@@ -120,6 +120,7 @@ Bug reports are always welcome. [Report here](https://thefoxe.com/contact/).
 
 - Added custom filters.
 - Added loader while comments are being loaded.
+- Disabled lazy load for Search Engine crawlers.
 - 100% translation ready.
 
 = 1.0.0.1 (19/11/2016) =
@@ -136,4 +137,5 @@ Bug reports are always welcome. [Report here](https://thefoxe.com/contact/).
 
 - Added custom filters.
 - Added loader while comments are being loaded.
+- Disabled lazy load for Search Engine crawlers.
 - 100% translation ready.
