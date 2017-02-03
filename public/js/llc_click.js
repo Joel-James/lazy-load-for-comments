@@ -54,5 +54,9 @@
                 }
             });
         });
+        // Load comments if #comment found in url.
+        if ( window.location.href.indexOf( "#comment" ) > -1 ) {
+            $( "#llc_comments_button" ).trigger( "click" );
+        }
     });
 })( jQuery );
