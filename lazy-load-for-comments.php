@@ -41,10 +41,10 @@ if ( ! class_exists( 'Lazy_Load_Comments' ) ) {
 
 	// Constants array
 	$constants = array(
-		'LLC_NAME' => 'lazy-load-for-comments',
-		'LLC_DOMAIN' => 'lazy-load-for-comments',
-		'LLC_VERSION' => '1.0.2',
-		'LLC_PATH' => plugins_url( '', __FILE__ ),
+		'LLC_NAME'       => 'lazy-load-for-comments',
+		'LLC_DOMAIN'     => 'lazy-load-for-comments',
+		'LLC_VERSION'    => '1.0.2',
+		'LLC_PATH'       => plugins_url( '', __FILE__ ),
 		'LLC_PLUGIN_DIR' => dirname( __FILE__ ),
 		'LLC_PERMISSION' => 'manage_options'
 	);
