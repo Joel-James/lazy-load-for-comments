@@ -1,31 +1,31 @@
 === Lazy Load for Comments ===
-Contributors: joelcj91,foxe
+Contributors: joelcj91,duckdev
 Tags: lazy load, lazy comments, conditional comments, lazyload comments, lazyload wordpress comments, comments
 Donate link: https://paypal.me/JoelCJ
 Requires at least: 4.0
-Tested up to: 4.7
-Stable tag: 1.0.0
+Tested up to: 4.7.2
+Stable tag: 1.0.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Lazy load WordPress commenting system on scroll or click. Improve page speed.
+Lazy load default WordPress commenting system on scroll or click. Improve page speed.
 
 == Description ==
 
-Lazy load WordPress commenting system and get improved page loading speed. Very useful and must have plugin for websites with large amount of comments.
+Lazy load WordPress default commenting system without any complex configurations. Get rid of unwanted HTTP requests and get your page speed back.
 
 
 > #### Lazy Load for Comments - Features & Advantages
 >
 > - Load comments only when required.<br />
-> - **Improved page loading speed.**<br />
+> - **Improve page loading speed.**<br />
 > - Reduce no. of HTTP requests!<br />
 > - Lazy loading comments gravaters.
 > - **Translation ready!**<br />
 > - No complex configurations (Just one setting).<br />
-> - Developer friendly.<br />
+> - Developer friendly (Hooks available for altering).<br />
 > - Follows best WordPress coding standards.<br />
-> - Of course, available in [GitHub](https://github.com/joel-james/lazy-load-comments)<br />
+> - Of course, available on [GitHub](https://github.com/joel-james/lazy-load-comments)<br />
 >
 > [Installation](https://wordpress.org/plugins/lazy-load-for-comments/installation/) | [Screenshots](https://wordpress.org/plugins/lazy-load-for-comments/screenshots/)
 
@@ -46,7 +46,7 @@ Lazy load WordPress commenting system and get improved page loading speed. Very 
 Feel free to [open a support request](http://wordpress.org/support/plugin/lazy-load-for-comments/).
 
 = Missing something? =
-If you would like to have an additional feature for this plugin, [let me know](https://duckdev.com/support/)
+If you would like to have an additional feature for this plugin, [let me know](https://thefoxe.com/contact/)
 
 == Frequently Asked Questions ==
 
@@ -54,6 +54,48 @@ If you would like to have an additional feature for this plugin, [let me know](h
 
 Plugin name says everything. This plugin prevents the comments from loading automatically when page/post is loaded. Instead, this plugin will lazy load the comments when user scroll down to comments section or clicking on comment button.
 
+= I don't need loader gif image, can I disable it? =
+
+Yes, you can!. Just add following line to your theme's functions.php or in your custom plugin.
+
+
+`
+add_filter( 'llc_enable_loader_element', '__return_false' );
+`
+
+= How can I change the button text? =
+
+Just add following line to your theme's functions.php or in your custom plugin.
+
+
+`
+add_filter( 'llc_button_text', function () {
+    return 'My Custom Button Text';
+});
+`
+
+= How can I add a custom class to the button? =
+
+Add following line to your theme's functions.php or in your custom plugin.
+
+
+`
+add_filter( 'llc_button_class', function () {
+    return 'custom-class-1 custom-class-2';
+});
+`
+
+= Can I use something else instead of loader image? =
+
+Yes! There is a filter for this too! Add following line to your theme's functions.php or in your custom plugin.
+
+
+`
+add_filter( 'llc_loader_element_content', function () {
+    // Use any html element.
+    return '<p class="custom-loader">Loading... Please wait.</p>';
+});
+`
 
 = I need more details =
 
@@ -64,7 +106,7 @@ Please [open a support request](http://wordpress.org/support/plugin/lazy-load-fo
 
 = Bug Reports =
 
-Bug reports are always welcome. [Report here](https://duckdev.com/support/).
+Bug reports are always welcome. [Report here](https://thefoxe.com/contact/).
 
 
 == Screenshots ==
@@ -74,12 +116,24 @@ Bug reports are always welcome. [Report here](https://duckdev.com/support/).
 
 == Changelog ==
 
+= 1.0.2 (04/02/2017) =
+
+- Added custom filters.
+- Added loader while comments are being loaded.
+- 100% translation ready.
+
+= 1.0.0.1 (19/11/2016) =
+
+- Bug fix on PHP v5.3 - Parse error.
+
 = 1.0.0 (18/11/2016) =
 
 - First version.
 
 == Upgrade Notice ==
 
-= 1.0.0 (18/11/2016) =
+= 1.0.2 (04/02/2017) =
 
-- First version.
+- Added custom filters.
+- Added loader while comments are being loaded.
+- 100% translation ready.

@@ -42,7 +42,9 @@ class LLC_Public {
 
     /**
      * Javascript to include lazy load script.
-     * 
+     *
+     * @using wp_localize_script() To make strings in JS translatable.
+     *
      * @since  1.0.0
      * @access public
      * 
@@ -65,6 +67,12 @@ class LLC_Public {
             LLC_VERSION,
             'all'
         );
+
+	    // Strings to translate in JS file.
+	    $strings = array( 'loading_error' => esc_html__( 'Error occurred while loading comments. Please reload this page.', LLC_DOMAIN ) );
+
+	    // Make strings in js translatable.
+	    wp_localize_script( LLC_NAME, 'llcstrings', $strings );
     }
 
     /**
@@ -84,19 +92,21 @@ class LLC_Public {
         check_ajax_referer( 'llc-ajax-nonce', 'llc_ajax_nonce' );
         
         // If post/page id not found in request, abort.
-        if ( empty( $id = $_REQUEST['post'] ) ) {
+        if ( empty( $_REQUEST['post'] ) ) {
             die();
         }
         // Query through posts.
-        query_posts( array( 'p' => $id, 'post_type' => 'any' ) );
-        
+        query_posts( array( 'p' => $_REQUEST['post'], 'post_type' => 'any' ) );
+        // Render comments template and remove our custom template.
         if ( have_posts() ) {
             the_post();
+	        // Remove our custom comments template and load default template.
             remove_filter( 'comments_template', array( $this, 'llc_template' ) );
             comments_template();
             exit();
         }
-        
+
+        // Die for ajax request.
         die();
     }
     
@@ -124,15 +134,55 @@ class LLC_Public {
      * @return boolean If real user or not.
      */
     private function is_real_user() {
-        
+
+	    // Is real user visiting?
+	    $is_real = false;
+	    // Get global variables for browsers.
+	    global $is_gecko, $is_opera, $is_safari, $is_chrome, $is_IE, $is_edge, $is_NS4, $is_lynx;
+
         // If mobile OS is found it is real user
         if ( wp_is_mobile() ) {
-            return true;
+            $is_real = true;
+        } elseif ( $is_gecko || $is_opera || $is_safari || $is_chrome || $is_IE || $is_edge || $is_NS4 || $is_lynx ) {
+	        // If current browser user agent global variable is found.
+	        $is_real = true;
+        } elseif ( ! $this->is_bot() ) {
+	        // If user agent is not bot/spider/crawlers.
+	        $is_real = true;
         }
-        
-        global $is_gecko, $is_opera, $is_safari, $is_chrome, $is_IE, $is_edge, $is_NS4, $is_lynx;
-        
-        return $is_gecko || $is_opera || $is_safari || $is_chrome || $is_IE || $is_edge || $is_NS4 || $is_lynx;        
+
+	    /**
+	     * Filter to alter real user check.
+	     *
+	     * User this filter to add additional check for real user vs bots.
+	     *
+	     * @since 1.0.2
+	     */
+	    return apply_filters( 'llc_is_real_user', $is_real );
+    }
+
+	/**
+	 * Check if current visitor's user agent is a bot.
+	 *
+	 * Check if user agent string matches bots, spiders or crawlers.
+	 * If user agent is not set, consider visitor as bot.
+	 *
+	 * @since 1.0.2
+	 * @access private
+	 *
+	 * @return bool
+	 */
+    private function is_bot() {
+
+	    // If user agent is not set, flag them as bot.
+	    if ( ! isset( $_SERVER['HTTP_USER_AGENT'] ) ) {
+		    return true;
+	    }
+
+	    // Check if any type of bot, spider or crawler is visiting.
+        if ( preg_match( '/bot|crawl|slurp|spider/i', $_SERVER['HTTP_USER_AGENT'] ) ) {
+			true;
+        }
     }
 
     /**
@@ -150,25 +200,33 @@ class LLC_Public {
     private function can_lazy_load() {
       
         global $post;
-        
-        // If lazy loading is not enabled, abort.
+
+	    // Can lazy load? (Default value).
+	    $can_lazyload = true;
+
         if ( 0 == get_option( 'lazy_load_comments', 1 ) ) {
-            return false;
+	        // If lazy loading is not enabled, abort.
+            $can_lazyload = false;
+        } elseif ( ! is_singular() ) {
+	        // If not on singular page, abort.
+	        $can_lazyload = false;
+        } elseif ( ! ( have_comments() || 'open' == $post->comment_status ) ) {
+	        // If comments are not available, abort.
+	        $can_lazyload = false;
+        } elseif ( ! $this->is_real_user() ) {
+	        // If the visitor is not real user, abort.
+	        $can_lazyload = false;
         }
-        // If not on singular page, abort.
-        if ( ! is_singular() ) {
-            return false;
-        }
-        // If comments are not available, abort.
-        if ( ! ( have_comments() || 'open' == $post->comment_status ) ) {
-            return false; 
-        }
-        // If the visitor is not real user, abort.
-        if ( ! $this->is_real_user() ) {
-            return false;
-        }
-        
-        return true;
+
+	    /**
+	     * Filter to alter if comments can be lazy loaded.
+	     *
+	     * User this filter to add additional check before lazy loading
+	     * or to bypass the default checking.
+	     *
+	     * @since 1.0.2
+	     */
+        return apply_filters( 'llc_can_lazy_load', $can_lazyload );
     }
 
 }

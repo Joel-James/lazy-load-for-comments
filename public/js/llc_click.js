@@ -1,4 +1,4 @@
-(function($) {
+( function( $ ) {
     'use strict';
 
     /**
@@ -24,31 +24,35 @@
      *
      * ...and so on.
      */
-    $(function() {
-
-        // Load comments data
-        $( '#llc_comments_button' ).on( 'click', function() {
-            $( '#llc_comments' ).html( '<h3>Loading comments....</h3>' );
-            var ajaxurl = $( '#llc_ajax_url' ).val();
+    $( function() {
+        // Load comments data on button click.
+        $( "#llc_comments_button" ).on( "click", function() {
+            // Hide button after clicking on it.
+            $( this ).hide();
+            // Show loader div. Loader element will be loaded only if enabled.
+            $( "#llc-comments-loader" ).show();
+            // Ajax url link for ajax requests.
+            var ajaxurl = $( "#llc_ajax_url" ).val();
             var data = {
-                'action': 'llc_load_comments',
-                'post': $( '#llc_post_id' ).val(),
-                'llc_ajax_nonce': $( '#llc_ajax_nonce' ).val()
+                "action"         : "llc_load_comments",
+                "post"           : $( "#llc_post_id" ).val(),
+                "llc_ajax_nonce" : $( "#llc_ajax_nonce" ).val()
             };
-
+            // Perform ajax request.
             $.ajax({
                 dataType : "html",
-                url : ajaxurl,
-                data : data,
-                type: 'post',
-                success : function( response ) {
-                    if ( response !== '' ) {
-                        $( '#llc_comments' ).html( response );
+                url      : ajaxurl,
+                data     : data,
+                type     : "post",
+                success  : function( response ) {
+                    if ( response !== "" ) {
+                        $( "#llc_comments" ).html( response );
                     } else {
-                        $( '#llc_comments' ).html( '<h4 style="color: red;">Error occurred. Please reload this page.</h4>' );
+                        // Incase ajax request failed, append an error message.
+                        $( "#llc_comments" ).html( '<p style="color: #ff0000;">' + llcstrings.loading_error + '</p>' );
                     }
                 }
             });
         });
     });
-})(jQuery);
+})( jQuery );
