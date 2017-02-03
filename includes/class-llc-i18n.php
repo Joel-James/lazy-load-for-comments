@@ -15,43 +15,43 @@
  */
 class LLC_I18n {
 
-    /**
-     * The domain specified for this plugin.
-     *
-     * @since  1.0.0
-     * @access private
-     * @var    string  $domain The domain identifier for this plugin.
-     */
-    private $domain;
+	/**
+	 * The domain specified for this plugin.
+	 *
+	 * @since  1.0.0
+	 * @access private
+	 * @var    string $domain The domain identifier for this plugin.
+	 */
+	private $domain;
 
-    /**
-     * Load the plugin text domain for translation.
-     *
-     * @since  1.0.0
-     * @access public
-     * 
-     * @return void
-     */
-    public function load_textdomain() {
+	/**
+	 * Load the plugin text domain for translation.
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 *
+	 * @return void
+	 */
+	public function load_textdomain() {
 
-        load_plugin_textdomain(
-            $this->domain,
-            false,
-            dirname( dirname( plugin_basename( __FILE__ ) ) ) . '/languages/'
-        );
-    }
+		load_plugin_textdomain(
+			$this->domain,
+			false,
+			dirname( dirname( plugin_basename( __FILE__ ) ) ) . '/languages/'
+		);
+	}
 
-    /**
-     * Set the domain equal to that of the specified domain.
-     * 
-     * @since  1.0.0
-     * @access public
-     * 
-     * @return void
-     */
-    public function set_domain() {
+	/**
+	 * Set the domain equal to that of the specified domain.
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 *
+	 * @return void
+	 */
+	public function set_domain() {
 
-        $this->domain = LLC_DOMAIN;
-    }
+		$this->domain = LLC_DOMAIN;
+	}
 
 }
