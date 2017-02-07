@@ -18,8 +18,7 @@ if ( ! defined( 'WPINC' ) ) {
 <!-- Required values for loading comments via ajax -->
 <input type="hidden" name="llc_ajax_url" id="llc_ajax_url" value="<?php echo admin_url( 'admin-ajax.php' ); ?>"/>
 <input type="hidden" name="llc_post_id" id="llc_post_id" value="<?php echo get_the_ID(); ?>"/>
-<input type="hidden" name="llc_ajax_nonce" id="llc_ajax_nonce"
-       value="<?php echo wp_create_nonce( "llc-ajax-nonce" ); ?>"/>
+<input type="hidden" name="llc_ajax_nonce" id="llc_ajax_nonce" value="<?php echo wp_create_nonce( "llc-ajax-nonce" ); ?>"/>
 <div id="llc_comments">
 	<div style="text-align: center;">
 		<div id="llc-comments-loader" style="display: none;">

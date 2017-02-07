@@ -25,8 +25,10 @@
      * ...and so on.
      */
     $( function() {
+
         // Load comments data on button click.
         $( "#llc_comments_button" ).on( "click", function() {
+            
             // Hide button after clicking on it.
             $( this ).hide();
             // Show loader div. Loader element will be loaded only if enabled.
@@ -38,6 +40,7 @@
                 "post"           : $( "#llc_post_id" ).val(),
                 "llc_ajax_nonce" : $( "#llc_ajax_nonce" ).val()
             };
+
             // Perform ajax request.
             $.ajax({
                 dataType : "html",
@@ -54,6 +57,7 @@
                 }
             });
         });
+
         // Load comments if #comment found in url.
         if ( window.location.href.indexOf( "#comment" ) > -1 ) {
             $( "#llc_comments_button" ).trigger( "click" );
