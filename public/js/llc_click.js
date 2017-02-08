@@ -50,6 +50,12 @@
                 success  : function( response ) {
                     if ( response !== "" ) {
                         $( "#llc_comments" ).html( response );
+                        // Get the comment li id from url if exist.
+                        var commentId = document.URL.substr(document.URL.indexOf("#comment"));
+                        // If comment id found, scroll to that comment.
+                        if (commentId.indexOf('#comment') > -1) {
+                            $(window).scrollTop($(commentId).offset().top);
+                        }
                     } else {
                         // Incase ajax request failed, append an error message.
                         $( "#llc_comments" ).html( '<p style="color: #ff0000;">' + llcstrings.loading_error + '</p>' );

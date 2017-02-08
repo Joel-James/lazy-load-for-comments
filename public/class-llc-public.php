@@ -60,7 +60,7 @@ class LLC_Public {
 		// Get the lazy load script according to user choice.
 		$file = ( get_option( 'lazy_load_comments', 1 ) == 2 ) ? 'llc_scroll' : 'llc_click';
 		// Minified or normal version?
-		$suffix = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '.js' : '.js';
+		$suffix = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '.js' : '.min.js';
 		// Enqueue the script file.
 		wp_enqueue_script(
 			LLC_NAME,
