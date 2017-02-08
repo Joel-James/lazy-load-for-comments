@@ -6,7 +6,7 @@
  * Description:     Lazy Load default WordPress comments. Load comments only after user clicking on a button or scrolling down. It saves page load time.
  * Version:         1.0.2
  * Author:          Joel James
- * Author URI:      https://duckdev.com/
+ * Author URI:      https://thefoxe.com/
  * Donate link:     https://paypal.me/JoelCJ
  * License:         GPL-2.0+
  * License URI:     http://www.gnu.org/licenses/gpl-2.0.txt

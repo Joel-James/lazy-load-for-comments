@@ -17,7 +17,7 @@ if ( ! defined( 'WPINC' ) ) {
  * @subpackage Loader
  * @author     Joel James <mail@cjoel.com>
  * @license    http://www.gnu.org/licenses/ GNU General Public License
- * @link       https://duckdev.com/products/lazy-facebook-comments/
+ * @link       https://wordpress.org/plugins/lazy-load-for-comments
  */
 class LLC_Loader {
 

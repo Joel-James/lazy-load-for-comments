@@ -11,7 +11,7 @@
  * @subpackage Internationalization
  * @author     Joel James <mail@cjoel.com>
  * @license    http://www.gnu.org/licenses/ GNU General Public License
- * @link       https://duckdev.com/products/lazy-load-comments/
+ * @link       https://wordpress.org/plugins/lazy-load-for-comments
  */
 class LLC_I18n {
 
