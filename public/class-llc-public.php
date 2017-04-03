@@ -90,15 +90,17 @@ class LLC_Public {
 	 */
 	public function comments_content() {
 
-		// Security check.
-		check_ajax_referer( 'llc-ajax-nonce', 'llc_ajax_nonce' );
+		// Security check (Removed to support caching).
+		// Instead of security check, we are sending get ajax request.
+		// https://konstantin.blog/2012/nonces-on-the-front-end-is-a-bad-idea/
+		//check_ajax_referer( 'llc-ajax-nonce', 'llc_ajax_nonce' );
 
 		// If post/page id not found in request, abort.
-		if ( empty( $_REQUEST['post'] ) ) {
+		if ( empty( $_GET['post'] ) ) {
 			die();
 		}
 		// Query through posts.
-		query_posts( array( 'p' => $_REQUEST['post'], 'post_type' => 'any' ) );
+		query_posts( array( 'p' => esc_sql( $_GET['post'] ), 'post_type' => 'any' ) );
 		// Render comments template and remove our custom template.
 		if ( have_posts() ) {
 			the_post();
