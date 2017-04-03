@@ -100,7 +100,7 @@ class LLC_Public {
 			die();
 		}
 		// Query through posts.
-		query_posts( array( 'p' => esc_sql( $_GET['post'] ), 'post_type' => 'any' ) );
+		query_posts( array( 'p' => intval( $_GET['post'] ), 'post_type' => 'any' ) );
 		// Render comments template and remove our custom template.
 		if ( have_posts() ) {
 			the_post();
