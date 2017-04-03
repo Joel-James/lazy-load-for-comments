@@ -28,21 +28,21 @@
 
         // Flag to check if comments are loaded already.
         var llcLoaded = 0;
-
         // Function that makes ajax request and loaded comments.
         var loadComments = function () {
             // Show loader div and element if not disabled.
             $("#llc-comments-loader").show();
-            // Ajax request link.
-            var ajaxurl = $("#llc_ajax_url").val();
             // Data to send over ajax request.
             var data = {
                 "action": "llc_load_comments",
                 "post": $("#llc_post_id").val(),
-                "llc_ajax_nonce": $("#llc_ajax_nonce").val(),
             };
+            // Ajax request link.
+            var llcajaxurl = $("#llc_ajax_url").val();
+            // Full url to get comments (Adding parameters).
+            var commentUrl = llcajaxurl + '?' + $.param(data);
             // Make ajax request to get comments.
-            $.post(ajaxurl, data, function (response) {
+            $.get(commentUrl, function (response) {
                 if (response !== "") {
                     $("#llc_comments").html(response);
                     // Get the comment li id from url if exist.
