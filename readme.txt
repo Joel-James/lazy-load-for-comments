@@ -3,8 +3,8 @@ Contributors: joelcj91,duckdev
 Tags: lazy load, lazy comments, conditional comments, lazyload comments, lazyload wordpress comments, comments
 Donate link: https://paypal.me/JoelCJ
 Requires at least: 4.0
-Tested up to: 4.7.2
-Stable tag: 1.0.2
+Tested up to: 4.7
+Stable tag: 1.0.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -116,11 +116,16 @@ Bug reports are always welcome. [Report here](https://thefoxe.com/contact/).
 
 == Changelog ==
 
-= 1.0.2 (04/02/2017) =
+= 1.0.3 (03/04/2017) =
+
+- Fixed wrong value return in bot checking function.
+
+= 1.0.2 (08/02/2017) =
 
 - Added custom filters.
 - Added loader while comments are being loaded.
 - Disabled lazy load for Search Engine crawlers.
+- Scroll to comment if #comment id found in url.
 - 100% translation ready.
 
 = 1.0.0.1 (19/11/2016) =
@@ -133,9 +138,6 @@ Bug reports are always welcome. [Report here](https://thefoxe.com/contact/).
 
 == Upgrade Notice ==
 
-= 1.0.2 (04/02/2017) =
+= 1.0.3 (03/04/2017) =
 
-- Added custom filters.
-- Added loader while comments are being loaded.
-- Disabled lazy load for Search Engine crawlers.
-- 100% translation ready.
+- Fixed wrong value return in bot checking function.

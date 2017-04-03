@@ -183,8 +183,10 @@ class LLC_Public {
 
 		// Check if any type of bot, spider or crawler is visiting.
 		if ( preg_match( '/bot|crawl|slurp|spider/i', $_SERVER['HTTP_USER_AGENT'] ) ) {
-			true;
+			return true;
 		}
+
+		return false;
 	}
 
 	/**
