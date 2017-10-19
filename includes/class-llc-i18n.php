@@ -1,5 +1,8 @@
 <?php
 
+// If this file is called directly, abort.
+defined( 'WPINC' ) or die( 'Damn it.! Dude you are looking for what?' );
+
 /**
  * Define the internationalization functionality
  *
