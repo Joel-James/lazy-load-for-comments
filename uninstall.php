@@ -14,9 +14,7 @@
  */
 // If uninstall not called from WordPress, then exit. That's it!
 
-if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
-    exit;
-}
+defined( 'WP_UNINSTALL_PLUGIN' ) or die( 'Damn it.! Dude you are looking for what?' );
 
 // Delete plugin options
 if ( get_option( 'lazy_load_comments' ) ) {
