@@ -126,7 +126,7 @@ class Lazy_Load_Comments {
 
         $plugin_public = new LLC_Public();
         
-        $this->loader->add_filter( 'comments_template', $plugin_public, 'llc_template' );
+        $this->loader->add_filter( 'comments_template', $plugin_public, 'llc_template', 100 );
         $this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'comments_script', 100 );
         $this->loader->add_action( 'wp_ajax_llc_load_comments', $plugin_public, 'comments_content' );
         $this->loader->add_action( 'wp_ajax_nopriv_llc_load_comments', $plugin_public, 'comments_content' );
