@@ -45,7 +45,7 @@ class LLC_Public {
 	 *
 	 * @since  1.0.0
 	 * @access public
-	 *Update priority so it loads after other comment template plugins
+	 *
 	 * @return void
 	 */
 	public function comments_script() {
