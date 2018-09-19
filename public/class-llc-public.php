@@ -45,7 +45,7 @@ class LLC_Public {
 	 *
 	 * @since  1.0.0
 	 * @access public
-	 *
+	 *Update priority so it loads after other comment template plugins
 	 * @return void
 	 */
 	public function comments_script() {
@@ -103,7 +103,7 @@ class LLC_Public {
 		if ( have_posts() ) {
 			the_post();
 			// Remove our custom comments template and load default template.
-			remove_filter( 'comments_template', array( $this, 'llc_template' ) );
+			remove_filter( 'comments_template', array( $this, 'llc_template' ), 100 );
 			comments_template();
 			exit();
 		}
