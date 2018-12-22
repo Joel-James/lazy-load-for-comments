@@ -16,6 +16,25 @@ defined( 'WPINC' ) or die( 'Damn it.! Dude you are looking for what?' );
 class LLC_Public {
 
 	/**
+	 * Update the comments link to our custom div.
+	 *
+	 * @param string $comments_link Comments link.
+	 * @param int    $post_id       Post ID.
+	 *
+	 * @since 1.0.4
+	 *
+	 * @return string
+	 */
+	public function comments_link( $comments_link, $post_id ) {
+		// If we are lazy loading, link to our div.
+		if ( $this->can_lazy_load() ) {
+			$comments_link = get_permalink( $post_id ) . '#llc_comments';
+		}
+
+		return $comments_link;
+	}
+
+	/**
 	 * Lazy load comments template file
 	 *
 	 * This is our custom comments template file for
@@ -41,7 +60,7 @@ class LLC_Public {
 	/**
 	 * Javascript to include lazy load script.
 	 *
-	 * @using wp_localize_script() To make strings in JS translatable.
+	 * @using  wp_localize_script() To make strings in JS translatable.
 	 *
 	 * @since  1.0.0
 	 * @access public
@@ -169,7 +188,7 @@ class LLC_Public {
 	 * Check if user agent string matches bots, spiders or crawlers.
 	 * If user agent is not set, consider visitor as bot.
 	 *
-	 * @since 1.0.2
+	 * @since  1.0.2
 	 * @access private
 	 *
 	 * @return bool
