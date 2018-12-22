@@ -21,7 +21,7 @@ class LLC_Public {
 	 * @param string $comments_link Comments link.
 	 * @param int    $post_id       Post ID.
 	 *
-	 * @since 1.0.5
+	 * @since 1.0.4
 	 *
 	 * @return string
 	 */
