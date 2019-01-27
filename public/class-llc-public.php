@@ -72,8 +72,10 @@ class LLC_Public {
 	public function comments_script() {
 		// Get the lazy load script according to user choice.
 		$file = ( get_option( 'lazy_load_comments', 1 ) == 2 ) ? 'llc_scroll' : 'llc_click';
+
 		// Minified or normal version?
 		$suffix = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '.js' : '.min.js';
+		
 		// Register the script file.
 		wp_register_script(
 			LLC_NAME,
@@ -110,14 +112,22 @@ class LLC_Public {
 		if ( empty( $_GET['post'] ) ) {
 			die();
 		}
+
+		// For Genesis support.
+		$genesis = function_exists( 'genesis' );
+
 		// Query through posts.
 		query_posts( array( 'p' => intval( $_GET['post'] ), 'post_type' => 'any' ) );
+
 		// Render comments template and remove our custom template.
 		if ( have_posts() ) {
 			the_post();
+
 			// Remove our custom comments template and load default template.
 			remove_filter( 'comments_template', array( $this, 'llc_template' ), 100 );
-			comments_template();
+
+			comments_template( '', $genesis );
+
 			exit();
 		}
 

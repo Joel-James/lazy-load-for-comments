@@ -4,7 +4,7 @@ Tags: lazy load, lazy comments, conditional comments, lazyload comments, lazyloa
 Donate link: https://paypal.me/JoelCJ
 Requires at least: 4.0
 Tested up to: 5.0
-Stable tag: 1.0.5
+Stable tag: 1.0.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -21,6 +21,7 @@ Lazy load WordPress default commenting system without any complex configurations
 > - **Improve page loading speed.**<br />
 > - Reduce no. of HTTP requests!<br />
 > - Lazy loading comments gravaters.
+> - Genesis support.
 > - **Translation ready!**<br />
 > - No complex configurations (Just one setting).<br />
 > - Developer friendly (Hooks available for altering).<br />
@@ -128,6 +129,10 @@ Bug reports are always welcome. [Report here](https://thefoxe.com/contact/).
 
 == Changelog ==
 
+= 1.0.6 (27/01/2019) =
+
+- 📦 Added Genesis support.
+
 = 1.0.5 (19/01/2019) =
 
 - 📦 Added new filter to set minimum no. of comments to lazy load.
@@ -162,8 +167,6 @@ Bug reports are always welcome. [Report here](https://thefoxe.com/contact/).
 
 == Upgrade Notice ==
 
-= 1.0.5 (19/01/2019) =
+= 1.0.6 (27/01/2019) =
 
-- 📦 Added new filter to set minimum no. of comments to lazy load.
-- 👌 Lazy load only when there are comments.
-- 🐛 Fixed empty comments when comments are closed.
+- 📦 Added Genesis support.
