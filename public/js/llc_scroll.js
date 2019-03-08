@@ -46,7 +46,7 @@
 				if ( response !== "" ) {
 					$( "#llc_comments" ).html( response );
 					// Initialize comments after lazy loading.
-					if ( window.addComment ) {
+					if ( window.addComment && window.addComment.init ) {
 						window.addComment.init();
 					}
 					// Get the comment li id from url if exist.
