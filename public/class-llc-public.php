@@ -267,5 +267,4 @@ class LLC_Public {
 		 */
 		return apply_filters( 'llc_can_lazy_load', $can_lazyload );
 	}
-
 }

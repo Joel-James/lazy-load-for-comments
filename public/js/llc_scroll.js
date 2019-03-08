@@ -45,6 +45,10 @@
 			$.get( commentUrl, function ( response ) {
 				if ( response !== "" ) {
 					$( "#llc_comments" ).html( response );
+					// Initialize comments after lazy loading.
+					if ( window.addComment ) {
+						window.addComment.init();
+					}
 					// Get the comment li id from url if exist.
 					var commentId = document.URL.substr( document.URL.indexOf( "#comment" ) );
 					// If comment id found, scroll to that comment.
