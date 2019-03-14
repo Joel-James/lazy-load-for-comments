@@ -26,7 +26,6 @@ class LLC_Admin {
 	 * @return void
 	 */
 	public function options_page() {
-
 		register_setting( 'discussion', 'lazy_load_comments' );
 
 		add_settings_field(
@@ -47,7 +46,6 @@ class LLC_Admin {
 	 * @return void
 	 */
 	public function fields() {
-
 		// Get settings value
 		$value = get_option( 'lazy_load_comments', 2 );
 

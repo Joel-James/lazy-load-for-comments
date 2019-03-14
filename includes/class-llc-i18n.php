@@ -36,7 +36,6 @@ class LLC_I18n {
 	 * @return void
 	 */
 	public function load_textdomain() {
-
 		load_plugin_textdomain(
 			$this->domain,
 			false,
@@ -53,7 +52,6 @@ class LLC_I18n {
 	 * @return void
 	 */
 	public function set_domain() {
-
 		$this->domain = LLC_DOMAIN;
 	}
 

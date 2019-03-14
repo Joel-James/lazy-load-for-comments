@@ -3,8 +3,8 @@ Contributors: joelcj91,duckdev
 Tags: lazy load, lazy comments, conditional comments, lazyload comments, lazyload wordpress comments, comments
 Donate link: https://paypal.me/JoelCJ
 Requires at least: 4.0
-Tested up to: 5.0
-Stable tag: 1.0.6
+Tested up to: 5.1
+Stable tag: 1.0.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -129,6 +129,11 @@ Bug reports are always welcome. [Report here](https://thefoxe.com/contact/).
 
 == Changelog ==
 
+= 1.0.7 (14/03/2019) =
+
+- 🐛 Fixed issues with WP 5.1.
+- 🐛 Fixed issues with Woo reviews.
+
 = 1.0.6 (27/01/2019) =
 
 - 📦 Added Genesis support.
@@ -167,6 +172,7 @@ Bug reports are always welcome. [Report here](https://thefoxe.com/contact/).
 
 == Upgrade Notice ==
 
-= 1.0.6 (27/01/2019) =
+= 1.0.7 (14/03/2019) =
 
-- 📦 Added Genesis support.
+- 🐛 Fixed issues with WP 5.1.
+- 🐛 Fixed issues with Woo reviews.

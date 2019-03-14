@@ -33,15 +33,13 @@ class Lazy_Load_Comments {
 	 *
 	 * @since  1.0.0
 	 * @access public
-	 *
-	 * @return void
 	 */
 	public function __construct() {
-
 		$this->dependencies();
 		$this->set_locale();
 		$this->admin_hooks();
 		$this->public_hooks();
+		$this->compatibility_hooks();
 	}
 
 	/**
@@ -62,11 +60,14 @@ class Lazy_Load_Comments {
 	 * @return void
 	 */
 	private function dependencies() {
-
+		// Load core files.
 		require_once LLC_PLUGIN_DIR . '/includes/class-llc-loader.php';
 		require_once LLC_PLUGIN_DIR . '/includes/class-llc-i18n.php';
 		require_once LLC_PLUGIN_DIR . '/admin/class-llc-admin.php';
 		require_once LLC_PLUGIN_DIR . '/public/class-llc-public.php';
+
+		// Compatibility.
+		require_once LLC_PLUGIN_DIR . '/includes/class-llc-compatibility.php';
 
 		$this->loader = new LLC_Loader();
 	}
@@ -83,7 +84,6 @@ class Lazy_Load_Comments {
 	 * @return void
 	 */
 	private function set_locale() {
-
 		$plugin_i18n = new LLC_I18n();
 
 		$plugin_i18n->set_domain();
@@ -102,7 +102,6 @@ class Lazy_Load_Comments {
 	 * @return void
 	 */
 	private function admin_hooks() {
-
 		// No need to execute if public side.
 		if ( ! is_admin() ) {
 			return;
@@ -123,7 +122,6 @@ class Lazy_Load_Comments {
 	 * @return void
 	 */
 	private function public_hooks() {
-
 		$plugin_public = new LLC_Public();
 
 		$this->loader->add_filter( 'comments_template', $plugin_public, 'llc_template', 100 );
@@ -131,6 +129,21 @@ class Lazy_Load_Comments {
 		$this->loader->add_action( 'wp_ajax_llc_load_comments', $plugin_public, 'comments_content' );
 		$this->loader->add_action( 'wp_ajax_nopriv_llc_load_comments', $plugin_public, 'comments_content' );
 		$this->loader->add_filter( 'get_comments_link', $plugin_public, 'comments_link', 100, 2 );
+	}
+
+	/**
+	 * Register all of the hooks related to handle 404 actions of the plugin.
+	 *
+	 * @since  1.0.0
+	 * @access private
+	 * @uses   add_filter()
+	 *
+	 * @return void
+	 */
+	private function compatibility_hooks() {
+		$plugin_compatibility = new LLC_Compatibility();
+
+		$this->loader->add_filter( 'llc_can_lazy_load', $plugin_compatibility, 'woocommerce_reviews' );
 	}
 
 	/**
@@ -142,7 +155,6 @@ class Lazy_Load_Comments {
 	 * @return void
 	 */
 	public function run() {
-
 		$this->loader->run();
 	}
 
