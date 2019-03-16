@@ -30,6 +30,10 @@
 		var llcLoaded = 0;
 		// Function that makes ajax request and loaded comments.
 		var loadComments = function () {
+			// Do not load again.
+			if ( llcLoaded > 0 ) {
+				return;
+			}
 			// Show loader div and element if not disabled.
 			$( "#llc-comments-loader" ).show();
 			// Data to send over ajax request.
@@ -57,8 +61,9 @@
 					}
 
 					// Woocommerce reviews compatibility.
-					if ( $( '#rating' ).length > 0 ) {
+					if ( $( '.wc-tabs .reviews_tab' ).length > 0 ) {
 						$( '#rating' ).trigger( 'init' );
+						// Make sure we are on reviews tab.
 						$( '.reviews_tab a' ).click();
 					}
 				}
@@ -72,15 +77,23 @@
 			loadComments();
 		}
 
-		// Load comments data on scroll down.
-		$( window ).scroll( function () {
-			// Get comments div element.
-			var rect = document.getElementById( "llc_comments" ).getBoundingClientRect();
-			// If comments div is visible, get comments template using ajax.
-			if ( rect.top < window.innerHeight && llcLoaded == 0 ) {
+		// Woocommerce reviews compatibility.
+		if ( $( '.wc-tabs .reviews_tab' ).length > 0 ) {
+			$( '.reviews_tab a' ).on( 'click', function() {
 				// Show loader div and element if not disabled.
 				loadComments();
-			}
-		} );
+			});
+		} else {
+			// Load comments data on scroll down.
+			$( window ).scroll( function () {
+				// Get comments div element.
+				var rect = document.getElementById( "llc_comments" ).getBoundingClientRect();
+				// If comments div is visible, get comments template using ajax.
+				if ( rect.top < window.innerHeight && llcLoaded == 0 ) {
+					// Show loader div and element if not disabled.
+					loadComments();
+				}
+			} );
+		}
 	} );
 })( jQuery );
