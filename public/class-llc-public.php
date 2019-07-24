@@ -6,12 +6,12 @@ defined( 'WPINC' ) or die( 'Damn it.! Dude you are looking for what?' );
 /**
  * The public-facing functionality of the plugin.
  *
+ * @author     Joel James <mail@cjoel.com>
+ * @link       https://wordpress.org/plugins/lazy-load-for-comments
+ * @license    http://www.gnu.org/licenses/ GNU General Public License
  * @category   Core
  * @package    LLC
  * @subpackage Public
- * @author     Joel James <mail@cjoel.com>
- * @license    http://www.gnu.org/licenses/ GNU General Public License
- * @link       https://wordpress.org/plugins/lazy-load-for-comments
  */
 class LLC_Public {
 
@@ -75,7 +75,7 @@ class LLC_Public {
 
 		// Minified or normal version?
 		$suffix = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '.js' : '.min.js';
-		
+
 		// Register the script file.
 		wp_register_script(
 			LLC_NAME,
@@ -113,9 +113,6 @@ class LLC_Public {
 			die();
 		}
 
-		// For Genesis support.
-		$genesis = function_exists( 'genesis' );
-
 		// Query through posts.
 		query_posts( array( 'p' => intval( $_GET['post'] ), 'post_type' => 'any' ) );
 
@@ -123,10 +120,19 @@ class LLC_Public {
 		if ( have_posts() ) {
 			the_post();
 
+			/**
+			 * Filter hook to add compatibility for comments separate.
+			 *
+			 * @param bool $flag Should separate (Default false).
+			 *
+			 * @since 1.0.10
+			 */
+			$separate_comments = apply_filters( 'llc_comments_content_separate_comments', false );
+
 			// Remove our custom comments template and load default template.
 			remove_filter( 'comments_template', array( $this, 'llc_template' ), 100 );
 
-			comments_template( '', $genesis );
+			comments_template( '', $separate_comments );
 
 			exit();
 		}
@@ -144,6 +150,9 @@ class LLC_Public {
 	 * This can help SEO for comments.
 	 * We decide this based on user's browser.
 	 *
+	 * @since  1.0.0
+	 * @access private
+	 *
 	 * @global bool $is_gecko
 	 * @global bool $is_opera
 	 * @global bool $is_safari
@@ -152,9 +161,6 @@ class LLC_Public {
 	 * @global bool $is_edge
 	 * @global bool $is_NS4
 	 * @global bool $is_lynx
-	 *
-	 * @since  1.0.0
-	 * @access private
 	 *
 	 * @return boolean If real user or not.
 	 */

@@ -141,7 +141,11 @@ class Lazy_Load_Comments {
 	 * @return void
 	 */
 	private function compatibility_hooks() {
-		$plugin_compatibility = new LLC_Compatibility();
+		$compatibility = new LLC_Compatibility();
+
+		// Compatibility.
+		$this->loader->add_action( 'llc_comments_content_separate_comments', $compatibility, 'separate_comments' );
+		$this->loader->add_filter( 'et_builder_load_requests', $compatibility, 'divi_load_functions' );
 	}
 
 	/**
