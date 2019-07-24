@@ -117,7 +117,6 @@ class Lazy_Load_Comments {
 	 *
 	 * @since  1.0.0
 	 * @access private
-	 * @uses   add_filter()
 	 *
 	 * @return void
 	 */
@@ -134,9 +133,8 @@ class Lazy_Load_Comments {
 	/**
 	 * Register all of the hooks related to handle 404 actions of the plugin.
 	 *
-	 * @since  1.0.0
+	 * @since  1.0.10
 	 * @access private
-	 * @uses   add_filter()
 	 *
 	 * @return void
 	 */
@@ -159,5 +157,4 @@ class Lazy_Load_Comments {
 	public function run() {
 		$this->loader->run();
 	}
-
 }

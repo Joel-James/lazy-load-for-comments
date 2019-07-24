@@ -49,7 +49,7 @@ class LLC_Compatibility {
 	 *
 	 * @since 1.0.10
 	 *
-	 * @return mixed
+	 * @return array
 	 */
 	public function divi_load_functions( $requests ) {
 		// If Divi is loaded, load functions of builder.

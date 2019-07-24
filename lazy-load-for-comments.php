@@ -4,9 +4,9 @@
  * Plugin Name:     Lazy Load for Comments
  * Plugin URI:      https://wordpress.org/plugins/lazy-load-for-comments
  * Description:     Lazy Load default WordPress comments. Load comments only after user clicking on a button or scrolling down. It saves page load time.
- * Version:         1.0.9
+ * Version:         1.0.10
  * Author:          Joel James
- * Author URI:      https://thefoxe.com/
+ * Author URI:      https://duckdev.com/
  * Donate link:     https://paypal.me/JoelCJ
  * License:         GPL-2.0+
  * License URI:     http://www.gnu.org/licenses/gpl-2.0.txt
@@ -41,7 +41,7 @@ if ( ! class_exists( 'Lazy_Load_Comments' ) ) {
 	$constants = array(
 		'LLC_NAME'       => 'lazy-load-for-comments',
 		'LLC_DOMAIN'     => 'lazy-load-for-comments',
-		'LLC_VERSION'    => '1.0.9',
+		'LLC_VERSION'    => '1.0.10',
 		'LLC_PATH'       => plugins_url( '', __FILE__ ),
 		'LLC_PLUGIN_DIR' => dirname( __FILE__ ),
 		'LLC_PERMISSION' => 'manage_options'

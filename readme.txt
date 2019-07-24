@@ -3,8 +3,8 @@ Contributors: joelcj91,duckdev
 Tags: lazy load, lazy comments, conditional comments, lazyload comments, lazyload wordpress comments, comments
 Donate link: https://paypal.me/JoelCJ
 Requires at least: 4.0
-Tested up to: 5.1
-Stable tag: 1.0.9
+Tested up to: 5.2
+Stable tag: 1.0.10
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -22,6 +22,7 @@ Lazy load WordPress default commenting system without any complex configurations
 > - Reduce no. of HTTP requests!<br />
 > - Lazy loading comments gravaters.
 > - Genesis support.
+> - Divi support.
 > - **Translation ready!**<br />
 > - No complex configurations (Just one setting).<br />
 > - Developer friendly (Hooks available for altering).<br />
@@ -47,7 +48,7 @@ Lazy load WordPress default commenting system without any complex configurations
 Feel free to [open a support request](http://wordpress.org/support/plugin/lazy-load-for-comments/).
 
 = Missing something? =
-If you would like to have an additional feature for this plugin, [let me know](https://thefoxe.com/contact/)
+If you would like to have an additional feature for this plugin, [let me know](https://duckdev.com/support/)
 
 == Frequently Asked Questions ==
 
@@ -119,7 +120,7 @@ Please [open a support request](http://wordpress.org/support/plugin/lazy-load-fo
 
 = Bug Reports =
 
-Bug reports are always welcome. [Report here](https://thefoxe.com/contact/).
+Bug reports are always welcome. [Report here](https://duckdev.com/support/).
 
 
 == Screenshots ==
@@ -128,6 +129,10 @@ Bug reports are always welcome. [Report here](https://thefoxe.com/contact/).
 
 
 == Changelog ==
+
+= 1.0.10 (24/07/2019) =
+
+- 📦 Added support for Divi.
 
 = 1.0.9 (16/03/2019) =
 
@@ -180,6 +185,6 @@ Bug reports are always welcome. [Report here](https://thefoxe.com/contact/).
 
 == Upgrade Notice ==
 
-= 1.0.9 (16/03/2019) =
+= 1.0.10 (24/07/2019) =
 
-- 🐛 Fixed issues with scroll load in Woo reviews.
+- 📦 Added support for Divi.
