@@ -252,7 +252,7 @@ class LLC_Public {
 		} elseif ( ! is_singular() ) {
 			// If not on singular page, abort.
 			$can_lazyload = false;
-		} elseif ( $comments_count === 0 && 'open' !== $post->comment_status ) {
+		} elseif ( 0 === $comments_count && 'open' !== $post->comment_status ) {
 			// If comments are not available, abort.
 			$can_lazyload = false;
 		} elseif ( $comments_count < $minimum_count ) {
@@ -261,6 +261,15 @@ class LLC_Public {
 		} elseif ( ! $this->is_real_user() ) {
 			// If the visitor is not real user, abort.
 			$can_lazyload = false;
+		}
+
+		// If the user has said they always want to load comments, abort.
+		$user_id = get_current_user_id();
+		if ( 0 !== $user_id ) {
+			$always_load_comments = get_user_meta( $user_id, 'always_load_comments', true );
+			if ( true === filter_var( $always_load_comments, FILTER_VALIDATE_BOOLEAN ) ) {
+				$can_lazyload = false;
+			}
 		}
 
 		/**
