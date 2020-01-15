@@ -17,7 +17,7 @@ defined( 'WPINC' ) or die( 'Damn it.! Dude you are looking for what?' );
 <input type="hidden" name="llc_ajax_url" id="llc_ajax_url" value="<?php echo admin_url( 'admin-ajax.php' ); ?>"/>
 <input type="hidden" name="llc_post_id" id="llc_post_id" value="<?php echo get_the_ID(); ?>"/>
 <div id="llc_comments">
-	<div style="text-align: center;">
+	<div <?php if ( apply_filters( 'llc_enable_loader_center', true ) ) : ?> style="text-align: center;"<?php endif; ?>>
 		<div id="llc-comments-loader" style="display: none;">
 			<!-- Filter to disable loader element if not needed -->
 			<?php if ( apply_filters( 'llc_enable_loader_element', true ) ) : ?>
