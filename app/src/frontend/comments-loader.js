@@ -14,10 +14,11 @@ const HASH_TRIGGERS = ['#comment', '#respond', '#llc-comments']
  * @param {number}  props.postId      Post ID.
  * @param {string}  props.restUrl     Comments REST endpoint URL.
  * @param {string}  props.method      Load method: 'scroll' or 'click'.
- * @param {string}  props.buttonText  Load button label.
- * @param {string}  props.buttonStyle Button style: 'theme' or 'custom'.
- * @param {string}  props.buttonClass Extra button CSS classes.
- * @param {boolean} props.showLoader  Whether to show the spinner.
+ * @param {string}  props.buttonText   Load button label.
+ * @param {string}  props.buttonStyle  Button style: 'theme' or 'custom'.
+ * @param {string}  props.buttonClass  Extra button CSS classes.
+ * @param {boolean} props.showLoader   Whether to show the spinner.
+ * @param {boolean} props.isBlockTheme Whether a block theme is active.
  */
 const CommentsLoader = ({
 	postId,
@@ -27,6 +28,7 @@ const CommentsLoader = ({
 	buttonStyle,
 	buttonClass,
 	showLoader,
+	isBlockTheme,
 }) => {
 	const [status, setStatus] = useState('idle')
 	const [html, setHtml] = useState('')
@@ -167,6 +169,11 @@ const CommentsLoader = ({
 					className={[
 						'llc-button',
 						buttonStyle === 'custom' && 'llc-button--custom',
+						// On block themes, inherit the theme's button
+						// styling from theme.json via wp-element-button.
+						buttonStyle === 'theme' &&
+							isBlockTheme &&
+							'wp-element-button',
 						buttonClass,
 					]
 						.filter(Boolean)

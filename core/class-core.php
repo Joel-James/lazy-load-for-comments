@@ -49,7 +49,7 @@ final class Core extends Base {
 	}
 
 	/**
-	 * Load the i18n text domain.
+	 * Set up classes and hooks needed everywhere.
 	 *
 	 * @since 2.0.0
 	 *
@@ -67,6 +67,12 @@ final class Core extends Base {
 					dirname( LLC_BASE_NAME ) . '/languages/'
 				);
 			}
+		);
+
+		// Clear the cached comments block markup when the theme changes.
+		add_action(
+			'switch_theme',
+			array( Front\Comments::class, 'flush_cache' )
 		);
 	}
 

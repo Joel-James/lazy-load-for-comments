@@ -66,6 +66,34 @@ class Comments extends Base {
 	}
 
 	/**
+	 * Delete all cached comment block transients.
+	 *
+	 * Hooked on `switch_theme`: a different theme renders the comments
+	 * block differently (or as a classic template instead), so the
+	 * stored block markup must not be reused.
+	 *
+	 * @since 2.0.0
+	 *
+	 * @return void
+	 */
+	public static function flush_cache() {
+		global $wpdb;
+
+		// Find every stored comment block transient.
+		$options = $wpdb->get_col( // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+			$wpdb->prepare(
+				"SELECT option_name FROM {$wpdb->options} WHERE option_name LIKE %s",
+				$wpdb->esc_like( '_transient_' . self::TRANSIENT_PREFIX ) . '%'
+			)
+		);
+
+		// Delete via the API so the object cache is cleared too.
+		foreach ( $options as $option ) {
+			delete_transient( substr( $option, strlen( '_transient_' ) ) );
+		}
+	}
+
+	/**
 	 * Register the front end hooks.
 	 *
 	 * @since 2.0.0
@@ -204,13 +232,14 @@ class Comments extends Base {
 			self::HANDLE,
 			'llcFrontend',
 			array(
-				'postId'      => get_the_ID(),
-				'restUrl'     => rest_url( Endpoint::NAMESPACE . '/comments' ),
-				'method'      => $settings->get( 'load_method', 'scroll' ),
-				'buttonText'  => $settings->get( 'button_text' ),
-				'buttonStyle' => $settings->get( 'button_style', 'theme' ),
-				'buttonClass' => $settings->get( 'button_class' ),
-				'showLoader'  => (bool) $settings->get( 'show_loader', true ),
+				'postId'       => get_the_ID(),
+				'restUrl'      => rest_url( Endpoint::NAMESPACE . '/comments' ),
+				'method'       => $settings->get( 'load_method', 'scroll' ),
+				'buttonText'   => $settings->get( 'button_text' ),
+				'buttonStyle'  => $settings->get( 'button_style', 'theme' ),
+				'buttonClass'  => $settings->get( 'button_class' ),
+				'showLoader'   => (bool) $settings->get( 'show_loader', true ),
+				'isBlockTheme' => wp_is_block_theme(),
 			)
 		);
 

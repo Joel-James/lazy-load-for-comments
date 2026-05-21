@@ -136,8 +136,12 @@ class Comments extends Endpoint {
 		};
 		add_filter( 'render_block_context', $context, 99 );
 
-		// Block themes: re-render the stored comments block.
-		$block = get_transient( FrontComments::transient_key( $post->ID ) );
+		// Block themes: re-render the stored comments block. The block
+		// theme check guards against a stale transient left behind after
+		// switching from a block theme to a classic one.
+		$block = wp_is_block_theme()
+			? get_transient( FrontComments::transient_key( $post->ID ) )
+			: false;
 
 		ob_start();
 
