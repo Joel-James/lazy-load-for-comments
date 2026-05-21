@@ -1,5 +1,11 @@
 import { __ } from '@wordpress/i18n'
-import { Notice, PanelBody, PanelRow, TextControl } from '@wordpress/components'
+import {
+	Notice,
+	PanelBody,
+	PanelRow,
+	SelectControl,
+	TextControl,
+} from '@wordpress/components'
 import useSettings from '../use-settings'
 
 /**
@@ -33,6 +39,34 @@ const ButtonTab = () => {
 					)}
 					value={getSetting('button_text', '')}
 					onChange={(value) => setSetting('button_text', value)}
+				/>
+			</PanelRow>
+			<PanelRow>
+				<SelectControl
+					__nextHasNoMarginBottom
+					label={__('Button style', 'lazy-load-for-comments')}
+					help={__(
+						'Inherit your theme button style, or use the plugin built-in style.',
+						'lazy-load-for-comments',
+					)}
+					value={getSetting('button_style', 'theme')}
+					options={[
+						{
+							label: __(
+								'Inherit theme style',
+								'lazy-load-for-comments',
+							),
+							value: 'theme',
+						},
+						{
+							label: __(
+								'Plugin style',
+								'lazy-load-for-comments',
+							),
+							value: 'custom',
+						},
+					]}
+					onChange={(value) => setSetting('button_style', value)}
 				/>
 			</PanelRow>
 			<PanelRow>

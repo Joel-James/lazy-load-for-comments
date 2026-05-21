@@ -77,6 +77,8 @@ class Settings extends Base {
 				'load_method'      => 'scroll',
 				// Text shown on the "Load Comments" button (click method).
 				'button_text'      => __( 'Load Comments', 'lazy-load-for-comments' ),
+				// Button style: 'theme' (inherit) or 'custom' (plugin style).
+				'button_style'     => 'theme',
 				// Extra CSS classes added to the button.
 				'button_class'     => '',
 				// Whether to show the loading spinner while fetching.
@@ -180,6 +182,10 @@ class Settings extends Base {
 								'enum' => array( 'scroll', 'click', 'off' ),
 							),
 							'button_text'      => array( 'type' => 'string' ),
+							'button_style'     => array(
+								'type' => 'string',
+								'enum' => array( 'theme', 'custom' ),
+							),
 							'button_class'     => array( 'type' => 'string' ),
 							'show_loader'      => array( 'type' => 'boolean' ),
 							'minimum_count'    => array( 'type' => 'integer' ),
@@ -213,6 +219,9 @@ class Settings extends Base {
 			switch ( $key ) {
 				case 'load_method':
 					$clean[ $key ] = in_array( $value, array( 'scroll', 'click', 'off' ), true ) ? $value : 'scroll';
+					break;
+				case 'button_style':
+					$clean[ $key ] = in_array( $value, array( 'theme', 'custom' ), true ) ? $value : 'theme';
 					break;
 				case 'button_text':
 					$clean[ $key ] = sanitize_text_field( $value );

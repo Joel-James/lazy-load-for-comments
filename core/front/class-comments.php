@@ -42,6 +42,17 @@ class Comments extends Base {
 	const HANDLE = 'lazy-load-for-comments-frontend';
 
 	/**
+	 * Memoized result of the can_lazy_load() check.
+	 *
+	 * The check is run several times per request (template, block,
+	 * enqueue, comment link), but the result is stable, so we cache it.
+	 *
+	 * @since 2.0.0
+	 * @var bool|null
+	 */
+	private ?bool $can_lazy_load = null;
+
+	/**
 	 * Get the transient key used to store a post's comments block.
 	 *
 	 * @since 2.0.0
@@ -197,6 +208,7 @@ class Comments extends Base {
 				'restUrl'     => rest_url( Endpoint::NAMESPACE . '/comments' ),
 				'method'      => $settings->get( 'load_method', 'scroll' ),
 				'buttonText'  => $settings->get( 'button_text' ),
+				'buttonStyle' => $settings->get( 'button_style', 'theme' ),
 				'buttonClass' => $settings->get( 'button_class' ),
 				'showLoader'  => (bool) $settings->get( 'show_loader', true ),
 			)
@@ -231,6 +243,11 @@ class Comments extends Base {
 	 * @return bool
 	 */
 	public function can_lazy_load() {
+		// Return the memoized result if already calculated.
+		if ( null !== $this->can_lazy_load ) {
+			return $this->can_lazy_load;
+		}
+
 		$can      = true;
 		$settings = lazy_load_for_comments_settings();
 
@@ -255,7 +272,9 @@ class Comments extends Base {
 		 *
 		 * @param bool $can Whether comments can be lazy loaded.
 		 */
-		return apply_filters( 'lazy_load_for_comments_can_lazy_load', $can );
+		$this->can_lazy_load = apply_filters( 'lazy_load_for_comments_can_lazy_load', $can );
+
+		return $this->can_lazy_load;
 	}
 
 	/**

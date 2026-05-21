@@ -144,7 +144,7 @@ class Comments extends Endpoint {
 		if ( ! empty( $block ) && is_string( $block ) ) {
 			echo do_blocks( $block ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		} else {
-			comments_template();
+			comments_template( '' );
 		}
 
 		$html = ob_get_clean();

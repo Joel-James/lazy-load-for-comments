@@ -3,7 +3,10 @@
 	text-align: center;
 }
 
-.llc-button {
+// By default the load button has no styles — it inherits the theme's
+// native button styling. The plugin style below is applied only when
+// the "Button style" setting is set to "Plugin style".
+.llc-button--custom {
 	display: inline-block;
 	padding: .6em 1.4em;
 	font-size: 1em;
@@ -12,7 +15,6 @@
 	cursor: pointer;
 	background: transparent;
 	border: 1px solid currentColor;
-	border-radius: 4px;
 
 	&:hover,
 	&:focus {

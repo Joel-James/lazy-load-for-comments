@@ -15,6 +15,7 @@ const HASH_TRIGGERS = ['#comment', '#respond', '#llc-comments']
  * @param {string}  props.restUrl     Comments REST endpoint URL.
  * @param {string}  props.method      Load method: 'scroll' or 'click'.
  * @param {string}  props.buttonText  Load button label.
+ * @param {string}  props.buttonStyle Button style: 'theme' or 'custom'.
  * @param {string}  props.buttonClass Extra button CSS classes.
  * @param {boolean} props.showLoader  Whether to show the spinner.
  */
@@ -23,6 +24,7 @@ const CommentsLoader = ({
 	restUrl,
 	method,
 	buttonText,
+	buttonStyle,
 	buttonClass,
 	showLoader,
 }) => {
@@ -162,7 +164,13 @@ const CommentsLoader = ({
 			{method === 'click' && status === 'idle' && (
 				<button
 					type="button"
-					className={`llc-button ${buttonClass || ''}`.trim()}
+					className={[
+						'llc-button',
+						buttonStyle === 'custom' && 'llc-button--custom',
+						buttonClass,
+					]
+						.filter(Boolean)
+						.join(' ')}
 					onClick={load}
 				>
 					{buttonText ||
