@@ -1,10 +1,9 @@
 <?php
-
 /**
  * Plugin Name:     Lazy Load for Comments
  * Plugin URI:      https://wordpress.org/plugins/lazy-load-for-comments
- * Description:     Lazy Load default WordPress comments. Load comments only after user clicking on a button or scrolling down. It saves page load time.
- * Version:         1.0.10
+ * Description:     Lazy load the default WordPress comments. Comments are loaded only after the visitor clicks a button or scrolls to the comments area. Works with both classic and block themes.
+ * Version:         2.0.0
  * Author:          Joel James
  * Author URI:      https://duckdev.com/
  * Donate link:     https://paypal.me/JoelCJ
@@ -12,71 +11,108 @@
  * License URI:     http://www.gnu.org/licenses/gpl-2.0.txt
  * Text Domain:     lazy-load-for-comments
  * Domain Path:     /languages
+ * Requires PHP:    7.4
+ * Requires at least: 5.9
  *
- * Comment is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 2 of the License, or
- * any later version.
- *
- * Comment is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with Comment. If not, see <http://www.gnu.org/licenses/>.
- *
- * @category Core
- * @package  LLC
- * @author   Joel James <mail@cjoel.com>
- * @license  http://www.gnu.org/licenses/ GNU General Public License
- * @link     https://wordpress.org/plugins/lazy-load-for-comments
+ * @package LazyComments
  */
+
 // If this file is called directly, abort.
-defined( 'WPINC' ) or die( 'Damn it.! Dude you are looking for what?' );
+defined( 'WPINC' ) || die;
 
-if ( ! class_exists( 'Lazy_Load_Comments' ) ) {
-
-	// Constants array
-	$constants = array(
-		'LLC_NAME'       => 'lazy-load-for-comments',
-		'LLC_DOMAIN'     => 'lazy-load-for-comments',
-		'LLC_VERSION'    => '1.0.10',
-		'LLC_PATH'       => plugins_url( '', __FILE__ ),
-		'LLC_PLUGIN_DIR' => dirname( __FILE__ ),
-		'LLC_PERMISSION' => 'manage_options'
+// Minimum PHP version is 7.4.
+if ( version_compare( PHP_VERSION, '7.4', '<' ) ) {
+	add_action(
+		'admin_notices',
+		function () {
+			printf(
+				'<div class="notice notice-error"><p>%s</p></div>',
+				esc_html(
+					sprintf(
+						/* translators: 1: required PHP version, 2: current PHP version. */
+						__( 'Lazy Load for Comments requires PHP %1$s or higher. Your site is running PHP %2$s.', 'lazy-load-for-comments' ),
+						'7.4',
+						PHP_VERSION
+					)
+				)
+			);
+		}
 	);
 
-	foreach ( $constants as $constant => $value ) {
-		// Set constants if not set already.
-		if ( ! defined( $constant ) ) {
-			define( $constant, $value );
-		}
-	}
-
-	// The core plugin class that is used to define.
-	// dashboard-specific hooks, and public-facing site hooks.
-	require_once plugin_dir_path( __FILE__ ) . 'includes/class-lazy-load-comments.php';
-
-	/**
-	 * Begins execution of the plugin.
-	 *
-	 * Since everything within the plugin is registered via hooks,
-	 * then kicking off the plugin from this point in the file does
-	 * not affect the page life cycle.
-	 *
-	 * @since  1.0.0
-	 * @access public
-	 *
-	 * @return void
-	 */
-	function llc_run_plugin() {
-
-		$plugin = new Lazy_Load_Comments();
-		$plugin->run();
-	}
-
-	llc_run_plugin();
+	return;
 }
 
-//*** Thank you for your interest in Lazy Load Comments - Developed and managed by Joel James ***//
+// Plugin version.
+define( 'LLC_VERSION', '2.0.0' );
+
+// Plugin main file.
+define( 'LLC_FILE', __FILE__ );
+
+// Plugin directory path (with trailing slash).
+define( 'LLC_DIR', plugin_dir_path( __FILE__ ) );
+
+// Plugin directory URL (with trailing slash).
+define( 'LLC_URL', plugin_dir_url( __FILE__ ) );
+
+// Plugin base name.
+define( 'LLC_BASE_NAME', plugin_basename( __FILE__ ) );
+
+/**
+ * Autoloader for the plugin classes.
+ *
+ * Maps the `DuckDev\LazyComments\` namespace to the `core/` directory.
+ * Example: `DuckDev\LazyComments\Admin\Menu` => `core/admin/class-menu.php`.
+ *
+ * @since 2.0.0
+ *
+ * @param string $class Fully qualified class name.
+ *
+ * @return void
+ */
+spl_autoload_register(
+	function ( $class ) {
+		$prefix = 'DuckDev\\LazyComments\\';
+
+		// Bail if the class is not in our namespace.
+		if ( 0 !== strpos( $class, $prefix ) ) {
+			return;
+		}
+
+		$parts      = explode( '\\', substr( $class, strlen( $prefix ) ) );
+		$class_name = array_pop( $parts );
+
+		// Convert CamelCase class name to a kebab-case file name.
+		$file = 'class-' . strtolower( preg_replace( '/([a-z0-9])([A-Z])/', '$1-$2', $class_name ) ) . '.php';
+
+		// Sub-namespaces map to lowercase sub-directories.
+		$sub_dir = '';
+		foreach ( $parts as $part ) {
+			$sub_dir .= strtolower( $part ) . '/';
+		}
+
+		$path = LLC_DIR . 'core/' . $sub_dir . $file;
+
+		if ( is_readable( $path ) ) {
+			require_once $path;
+		}
+	}
+);
+
+// Global helper functions.
+require_once LLC_DIR . 'core/functions.php';
+
+// Activation and deactivation hooks.
+register_activation_hook( __FILE__, array( 'DuckDev\LazyComments\Plugin', 'activate' ) );
+register_deactivation_hook( __FILE__, array( 'DuckDev\LazyComments\Plugin', 'deactivate' ) );
+
+/**
+ * Boot the plugin once all plugins are loaded.
+ *
+ * @since 2.0.0
+ */
+add_action(
+	'plugins_loaded',
+	function () {
+		DuckDev\LazyComments\Core::instance();
+	}
+);

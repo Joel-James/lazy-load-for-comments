@@ -1,0 +1,57 @@
+.llc-loader {
+	padding: 1rem 0;
+	text-align: center;
+}
+
+.llc-button {
+	display: inline-block;
+	padding: .6em 1.4em;
+	font-size: 1em;
+	line-height: 1.4;
+	color: inherit;
+	cursor: pointer;
+	background: transparent;
+	border: 1px solid currentColor;
+	border-radius: 4px;
+
+	&:hover,
+	&:focus {
+		opacity: .85;
+	}
+}
+
+.llc-spinner {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding: 1rem 0;
+}
+
+.llc-spinner-circle {
+	width: 28px;
+	height: 28px;
+	border: 3px solid rgba(0, 0, 0, .15);
+	border-top-color: rgba(0, 0, 0, .55);
+	border-radius: 50%;
+	animation: llc-spin .8s linear infinite;
+}
+
+@keyframes llc-spin {
+
+	to {
+		transform: rotate(360deg);
+	}
+}
+
+.llc-error {
+	color: #d63638;
+}
+
+.llc-retry {
+	padding: 0;
+	color: inherit;
+	text-decoration: underline;
+	cursor: pointer;
+	background: none;
+	border: 0;
+}

@@ -1,24 +1,25 @@
 <?php
-
 /**
- * Fired only when the plugin is un-installed.
+ * Fired when the plugin is uninstalled.
  *
- * Removes everything that this plugin added to your db.
+ * Removes all plugin data: settings, the legacy option and the cached
+ * comment block transients.
  *
- * @category   Core
- * @package    LLC
- * @subpackage Uninstaller
- * @author     Joel James <mail@cjoel.com>
- * @license    http://www.gnu.org/licenses/ GNU General Public License
- * @link       https://duckdev.com/products/lazy-load-comments/
+ * @package LazyComments
  */
-// If uninstall not called from WordPress, then exit. That's it!
 
-defined( 'WP_UNINSTALL_PLUGIN' ) or die( 'Damn it.! Dude you are looking for what?' );
+// Exit if not called by WordPress.
+defined( 'WP_UNINSTALL_PLUGIN' ) || die;
 
-// Delete plugin options
-if ( get_option( 'lazy_load_comments' ) ) {
-    delete_option( 'lazy_load_comments' );
-}
+// Delete plugin options.
+delete_option( 'lazy_load_for_comments_settings' );
+delete_option( 'lazy_load_comments' );
 
-/******* The end. Thanks for using Lazy Load Comments plugin ********/
+global $wpdb;
+
+// Delete the cached comment block transients.
+$wpdb->query( // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+	"DELETE FROM {$wpdb->options}
+	 WHERE option_name LIKE '\_transient\_llc\_comments\_block\_%'
+	    OR option_name LIKE '\_transient\_timeout\_llc\_comments\_block\_%'"
+);

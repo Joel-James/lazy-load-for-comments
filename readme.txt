@@ -1,190 +1,83 @@
 === Lazy Load for Comments ===
 Contributors: joelcj91,duckdev
-Tags: lazy load, lazy comments, conditional comments, lazyload comments, lazyload wordpress comments, comments
+Tags: lazy load, comments, lazyload comments, page speed, performance
 Donate link: https://paypal.me/JoelCJ
-Requires at least: 4.0
-Tested up to: 5.2
-Stable tag: 1.0.10
+Requires at least: 5.9
+Tested up to: 6.8
+Requires PHP: 7.4
+Stable tag: 2.0.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Lazy load default WordPress commenting system on scroll or click. Improve page speed.
+Lazy load the default WordPress comments on scroll or click. Works with both classic and block themes. Improve page speed.
 
 == Description ==
 
-Lazy load WordPress default commenting system without any complex configurations. Get rid of unwanted HTTP requests and get your page speed back.
+Lazy Load for Comments stops the WordPress comments from loading with the rest of the page. Instead, the comments are loaded only when the visitor scrolls to the comments area or clicks a button. This cuts down HTTP requests (comment avatars, scripts) and improves page load time.
 
+Version 2.0 is a complete rewrite using React and the WordPress REST API. It now works with **both classic themes and modern block themes**.
 
-> #### Lazy Load for Comments - Features & Advantages
+> #### Features
 >
-> - Load comments only when required.<br />
-> - **Improve page loading speed.**<br />
-> - Reduce no. of HTTP requests!<br />
-> - Lazy loading comments gravaters.
-> - Genesis support.
-> - Divi support.
-> - **Translation ready!**<br />
-> - No complex configurations (Just one setting).<br />
-> - Developer friendly (Hooks available for altering).<br />
-> - Follows best WordPress coding standards.<br />
-> - Of course, available on [GitHub](https://github.com/joel-james/lazy-load-comments)<br />
->
-> [Installation](https://wordpress.org/plugins/lazy-load-for-comments/installation/) | [Screenshots](https://wordpress.org/plugins/lazy-load-for-comments/screenshots/)
-
-
+> - Lazy load comments on scroll or on button click.
+> - Works with classic themes and block themes (the Comments block).
+> - Loads comments normally for search engine bots, so SEO is not affected.
+> - Simple React based settings page under the Comments menu.
+> - Customisable load button text and CSS classes.
+> - Optional minimum comment count before lazy loading kicks in.
+> - Developer friendly — hooks available for customisation.
+> - Translation ready.
 
 == Installation ==
 
-
-= Installing the plugin - Simple =
-1. In your WordPress admin panel, go to *Plugins > New Plugin*, search for **Lazy Load for Comments** and click "*Install now*"
-2. Alternatively, download the plugin and upload the contents of `lazy-load-for-comments.zip` to your plugins directory, which usually is `/wp-content/plugins/`.
-3. Activate the plugin
-4. Go to Discussion settings.
-5. Select the lazy load method (Scroll or Click).
-
-
-= Need more help? =
-Feel free to [open a support request](http://wordpress.org/support/plugin/lazy-load-for-comments/).
-
-= Missing something? =
-If you would like to have an additional feature for this plugin, [let me know](https://duckdev.com/support/)
+1. In your WordPress admin panel, go to *Plugins > Add New*, search for **Lazy Load for Comments** and click *Install now*.
+2. Alternatively, upload the `lazy-load-for-comments` folder to `/wp-content/plugins/`.
+3. Activate the plugin.
+4. Go to *Comments > Lazy Load* to configure the settings.
 
 == Frequently Asked Questions ==
 
-= What is the use of this plugin? =
+= Does it work with block themes? =
 
-Plugin name says everything. This plugin prevents the comments from loading automatically when page/post is loaded. Instead, this plugin will lazy load the comments when user scroll down to comments section or clicking on comment button.
+Yes. Version 2.0 supports both classic themes (using `comments_template()`) and block themes that render the core Comments block.
 
-= I don't need loader gif image, can I disable it? =
+= How do I change the load method? =
 
-Yes, you can!. Just add following line to your theme's functions.php or in your custom plugin.
+Go to *Comments > Lazy Load* and choose between "On scroll", "On button click" or "Disabled".
 
+= How do I change the button text or styling? =
 
-`
-add_filter( 'llc_enable_loader_element', '__return_false' );
-`
+The button text and extra CSS classes can be set on the *Load Button* tab of the settings page.
 
-= How can I change the button text? =
+= How can I disable lazy loading for specific posts? =
 
-Just add following line to your theme's functions.php or in your custom plugin.
-
+Use the `lazy_load_for_comments_can_lazy_load` filter:
 
 `
-add_filter( 'llc_button_text', function () {
-    return 'My Custom Button Text';
-});
+add_filter( 'lazy_load_for_comments_can_lazy_load', function ( $can ) {
+    if ( is_page( 'contact' ) ) {
+        return false;
+    }
+    return $can;
+} );
 `
-
-= How can I add a custom class to the button? =
-
-Add following line to your theme's functions.php or in your custom plugin.
-
-
-`
-add_filter( 'llc_button_class', function () {
-    return 'custom-class-1 custom-class-2';
-});
-`
-
-= Can I use something else instead of loader image? =
-
-Yes! There is a filter for this too! Add following line to your theme's functions.php or in your custom plugin.
-
-
-`
-add_filter( 'llc_loader_element_content', function () {
-    // Use any html element.
-    return '<p class="custom-loader">Loading... Please wait.</p>';
-});
-`
-
-= How to lazy load only only when there specific (or more) no. of comments? =
-
-You can simply use below filter to set the minimum no. of comments to lazy load.
-
-
-`
-add_filter( 'llc_can_lazy_load_minimum_count', function () {
-    // Lazy load only if there are 10 or more comments.
-    return 10;
-});
-`
-
-= I need more details =
-
-Please [open a support request](http://wordpress.org/support/plugin/lazy-load-for-comments/).
-
-
-== Other Notes ==
-
-= Bug Reports =
-
-Bug reports are always welcome. [Report here](https://duckdev.com/support/).
-
-
-== Screenshots ==
-
-1. **Settings** - Select lazy load method.
-
 
 == Changelog ==
 
-= 1.0.10 (24/07/2019) =
+= 2.0.0 =
 
-- 📦 Added support for Divi.
+- Complete rewrite using React and the WordPress REST API.
+- Added support for block themes (the core Comments block).
+- New React based settings page under the Comments menu.
+- Settings for load method, minimum comment count, loader and button.
+- Removed the dependency on jQuery.
 
-= 1.0.9 (16/03/2019) =
+= 1.0.10 =
 
-- 🐛 Fixed issues with scroll load in Woo reviews.
-
-= 1.0.8 (14/03/2019) =
-
-- 📦 Added Woo reviews support.
-
-= 1.0.7 (14/03/2019) =
-
-- 🐛 Fixed issues with WP 5.1.
-- 🐛 Fixed issues with Woo reviews.
-
-= 1.0.6 (27/01/2019) =
-
-- 📦 Added Genesis support.
-
-= 1.0.5 (19/01/2019) =
-
-- 📦 Added new filter to set minimum no. of comments to lazy load.
-- 👌 Lazy load only when there are comments.
-- 🐛 Fixed empty comments when comments are closed.
-
-= 1.0.4 (22/12/2018) =
-
-- 👌 Removed nonce (nonce is not required for frontend [get requests.](https://konstantin.blog/2012/nonces-on-the-front-end-is-a-bad-idea/)).
-- 👌 Changed to GET ajax request.
-- 🐛 Fixed comments respond link.
-
-= 1.0.3 (03/04/2017) =
-
-- Fixed wrong value return in bot checking function.
-
-= 1.0.2 (08/02/2017) =
-
-- Added custom filters.
-- Added loader while comments are being loaded.
-- Disabled lazy load for Search Engine crawlers.
-- Scroll to comment if #comment id found in url.
-- 100% translation ready.
-
-= 1.0.0.1 (19/11/2016) =
-
-- Bug fix on PHP v5.3 - Parse error.
-
-= 1.0.0 (18/11/2016) =
-
-- First version.
+- Added support for Divi.
 
 == Upgrade Notice ==
 
-= 1.0.10 (24/07/2019) =
+= 2.0.0 =
 
-- 📦 Added support for Divi.
+Major rewrite with React and block theme support. Your existing load method setting is migrated automatically.
