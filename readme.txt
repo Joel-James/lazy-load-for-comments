@@ -2,8 +2,8 @@
 Contributors: joelcj91,duckdev
 Tags: lazy load, comments, lazyload comments, page speed, performance
 Donate link: https://paypal.me/JoelCJ
-Requires at least: 5.9
-Tested up to: 6.8
+Requires at least: 6.0
+Tested up to: 7.0
 Requires PHP: 7.4
 Stable tag: 2.0.0
 License: GPLv2 or later
