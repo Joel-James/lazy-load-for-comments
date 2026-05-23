@@ -14,6 +14,7 @@ defined( 'WPINC' ) || die;
 
 use DuckDev\LazyComments\Plugin;
 use DuckDev\LazyComments\Utils\Base;
+use DuckDev\LazyComments\Api\Endpoint;
 
 /**
  * Class Assets
@@ -72,7 +73,9 @@ class Assets extends Base {
 			self::HANDLE,
 			'llcSettings',
 			array(
-				'version' => LLC_VERSION,
+				'version'      => LLC_VERSION,
+				'restUrl'      => rest_url( Endpoint::NAMESPACE . '/' ),
+				'restNonce'    => wp_create_nonce( 'wp_rest' ),
 			)
 		);
 

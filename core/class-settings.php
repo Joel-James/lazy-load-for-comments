@@ -87,6 +87,8 @@ class Settings extends Base {
 				'minimum_count'    => 1,
 				// Skip lazy loading for search engine bots (better SEO).
 				'disable_for_bots' => true,
+				// Cache the parsed comments block in a transient for faster REST renders.
+				'cache_enabled'    => true,
 			)
 		);
 	}
@@ -190,6 +192,7 @@ class Settings extends Base {
 							'show_loader'      => array( 'type' => 'boolean' ),
 							'minimum_count'    => array( 'type' => 'integer' ),
 							'disable_for_bots' => array( 'type' => 'boolean' ),
+							'cache_enabled'    => array( 'type' => 'boolean' ),
 						),
 					),
 				),
@@ -235,6 +238,7 @@ class Settings extends Base {
 					break;
 				case 'show_loader':
 				case 'disable_for_bots':
+				case 'cache_enabled':
 					$clean[ $key ] = (bool) $value;
 					break;
 				default:

@@ -176,11 +176,15 @@ class Comments extends Base {
 		}
 
 		// Stash the block markup so the REST endpoint can re-render it.
-		set_transient(
-			self::transient_key( $post_id ),
-			serialize_block( $block ),
-			WEEK_IN_SECONDS
-		);
+		// Skipped when the user has disabled caching — the REST endpoint
+		// will re-resolve the block from the active template each time.
+		if ( (bool) lazy_load_for_comments_settings()->get( 'cache_enabled', true ) ) {
+			set_transient(
+				self::transient_key( $post_id ),
+				serialize_block( $block ),
+				WEEK_IN_SECONDS
+			);
+		}
 
 		return $this->placeholder();
 	}
@@ -234,6 +238,7 @@ class Comments extends Base {
 			array(
 				'postId'       => get_the_ID(),
 				'restUrl'      => rest_url( Endpoint::NAMESPACE . '/comments' ),
+				'restNonce'    => wp_create_nonce( 'wp_rest' ),
 				'method'       => $settings->get( 'load_method', 'scroll' ),
 				'buttonText'   => $settings->get( 'button_text' ),
 				'buttonStyle'  => $settings->get( 'button_style', 'theme' ),

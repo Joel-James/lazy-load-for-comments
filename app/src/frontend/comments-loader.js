@@ -13,6 +13,7 @@ const HASH_TRIGGERS = ['#comment', '#respond', '#llc-comments']
  * @param {Object}  props             Component props (from `llcFrontend`).
  * @param {number}  props.postId      Post ID.
  * @param {string}  props.restUrl     Comments REST endpoint URL.
+ * @param {string}  props.restNonce   REST API nonce (so the request runs as the current user).
  * @param {string}  props.method      Load method: 'scroll' or 'click'.
  * @param {string}  props.buttonText   Load button label.
  * @param {string}  props.buttonStyle  Button style: 'theme' or 'custom'.
@@ -23,6 +24,7 @@ const HASH_TRIGGERS = ['#comment', '#respond', '#llc-comments']
 const CommentsLoader = ({
 	postId,
 	restUrl,
+	restNonce,
 	method,
 	buttonText,
 	buttonStyle,
@@ -44,9 +46,18 @@ const CommentsLoader = ({
 		setStatus('loading')
 
 		try {
+			const headers = { Accept: 'application/json' }
+
+			// Send the REST nonce so the request is authenticated as the
+			// current user — otherwise the server renders the form as
+			// logged-out and shows the name/email fields.
+			if (restNonce) {
+				headers['X-WP-Nonce'] = restNonce
+			}
+
 			const response = await fetch(
 				`${restUrl}?post_id=${encodeURIComponent(postId)}`,
-				{ headers: { Accept: 'application/json' } },
+				{ headers, credentials: 'same-origin' },
 			)
 
 			if (!response.ok) {
@@ -60,7 +71,7 @@ const CommentsLoader = ({
 			requested.current = false
 			setStatus('error')
 		}
-	}, [postId, restUrl])
+	}, [postId, restUrl, restNonce])
 
 	// Load immediately if the URL points at the comments.
 	useEffect(() => {

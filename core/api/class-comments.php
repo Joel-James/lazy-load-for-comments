@@ -143,6 +143,13 @@ class Comments extends Endpoint {
 			? get_transient( FrontComments::transient_key( $post->ID ) )
 			: false;
 
+		// No transient available (cache disabled or never seeded): on
+		// block themes, find the comments block in the active template
+		// and use that instead. Classic themes fall back to comments_template().
+		if ( empty( $block ) && wp_is_block_theme() ) {
+			$block = $this->resolve_comments_block( $post );
+		}
+
 		ob_start();
 
 		if ( ! empty( $block ) && is_string( $block ) ) {
@@ -170,5 +177,87 @@ class Comments extends Endpoint {
 		 * @param \WP_Post $post Post object.
 		 */
 		return apply_filters( 'lazy_load_for_comments_rendered_html', $html, $post );
+	}
+
+	/**
+	 * Resolve the `core/comments` block from the active block template.
+	 *
+	 * Used when no transient is available — either because caching is
+	 * disabled or the post hasn't been visited yet. Walks the parsed
+	 * template (and any referenced template parts) looking for the
+	 * comments block, and returns it as a serialized block string.
+	 *
+	 * @since 2.0.0
+	 *
+	 * @param \WP_Post $post Post object.
+	 *
+	 * @return string Serialized comments block, or empty string if not found.
+	 */
+	private function resolve_comments_block( $post ) {
+		if ( ! function_exists( 'resolve_block_template' ) ) {
+			return '';
+		}
+
+		$slugs    = array( 'single-' . $post->post_type . '-' . $post->post_name, 'single-' . $post->post_type, 'single', 'singular', 'index' );
+		$template = resolve_block_template( 'singular', $slugs, '' );
+
+		if ( ! $template || empty( $template->content ) ) {
+			return '';
+		}
+
+		$block = $this->find_comments_block( parse_blocks( $template->content ) );
+
+		return $block ? serialize_block( $block ) : '';
+	}
+
+	/**
+	 * Recursively search a parsed block tree for the `core/comments` block.
+	 *
+	 * Resolves `core/template-part` references so the comments block can
+	 * be found even when it lives inside a referenced part.
+	 *
+	 * @since 2.0.0
+	 *
+	 * @param array $blocks Parsed blocks.
+	 *
+	 * @return array|null Matched block, or null when not found.
+	 */
+	private function find_comments_block( $blocks ) {
+		foreach ( $blocks as $block ) {
+			if ( empty( $block['blockName'] ) ) {
+				continue;
+			}
+
+			if ( 'core/comments' === $block['blockName'] ) {
+				return $block;
+			}
+
+			if ( 'core/template-part' === $block['blockName'] && function_exists( 'get_block_template' ) ) {
+				$slug  = isset( $block['attrs']['slug'] ) ? $block['attrs']['slug'] : '';
+				$theme = isset( $block['attrs']['theme'] ) ? $block['attrs']['theme'] : wp_get_theme()->get_stylesheet();
+
+				if ( $slug ) {
+					$part = get_block_template( $theme . '//' . $slug, 'wp_template_part' );
+
+					if ( $part && ! empty( $part->content ) ) {
+						$found = $this->find_comments_block( parse_blocks( $part->content ) );
+
+						if ( $found ) {
+							return $found;
+						}
+					}
+				}
+			}
+
+			if ( ! empty( $block['innerBlocks'] ) ) {
+				$found = $this->find_comments_block( $block['innerBlocks'] );
+
+				if ( $found ) {
+					return $found;
+				}
+			}
+		}
+
+		return null;
 	}
 }

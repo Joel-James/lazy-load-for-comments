@@ -34,6 +34,7 @@ final class Core extends Base {
 		$this->admin();
 		$this->front();
 		$this->api();
+		$this->compat();
 
 		/**
 		 * Action hook fired once the plugin is fully loaded.
@@ -113,5 +114,17 @@ final class Core extends Base {
 	 */
 	private function api() {
 		new Api\Comments();
+		new Api\Cache();
+	}
+
+	/**
+	 * Register third-party theme compatibility.
+	 *
+	 * @since 2.0.0
+	 *
+	 * @return void
+	 */
+	private function compat() {
+		Compat\Compatibility::instance();
 	}
 }
