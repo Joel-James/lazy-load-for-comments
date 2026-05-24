@@ -62,6 +62,17 @@ jobs:
         # Test the declared minimum (matches readme.txt `Requires at least`),
         # a recent stable, and the latest release.
         wp:  [ '6.0', '6.5', 'latest' ]
+        exclude:
+          # WordPress 6.0 was released before PHP 8.2's "dynamic
+          # property" deprecation, and its WP_Object_Cache class was
+          # not annotated with `#[\AllowDynamicProperties]` (that was
+          # added in WP 6.1). Running WP 6.0 on PHP 8.2+ therefore
+          # triggers deprecation notices in WP core that have nothing
+          # to do with our plugin code. WordPress itself never
+          # supported WP 6.0 on PHP 8.2+, so this combination is not
+          # a real-world target.
+          - php: '8.3'
+            wp:  '6.0'
 
     services:
       mysql:
