@@ -14,5 +14,3 @@ node_modules/
 .DS_Store
 *.log
 
-# npm lockfile is intentionally not tracked.
-package-lock.json
