@@ -1,6 +1,7 @@
 [![Plugin Version](https://img.shields.io/wordpress/plugin/v/lazy-load-for-comments.svg?style=flat-square)](https://wordpress.org/plugins/lazy-load-for-comments/)
 [![License](https://img.shields.io/badge/license-GPL_v2%2B-blue.svg?style=flat-square)](https://opensource.org/license/GPL-2.0)
 [![WordPress Tested](https://img.shields.io/wordpress/v/lazy-load-for-comments.svg?style=flat-square)](https://wordpress.org/plugins/lazy-load-for-comments/)
+[![CI](https://github.com/Joel-James/lazy-load-for-comments/actions/workflows/ci.yml/badge.svg)](https://github.com/Joel-James/lazy-load-for-comments/actions/workflows/ci.yml)
 
 # Lazy Load for Comments - Speed Up WordPress Comments
 
