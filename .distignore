@@ -32,6 +32,7 @@ assets
 phpcs.xml.dist
 phpunit.xml.dist
 .phpcs.cache
+.phpunit.result.cache
 coverage
 tests
 bin

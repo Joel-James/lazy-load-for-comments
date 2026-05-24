@@ -12,6 +12,12 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
+# Principle of least privilege — every job only needs to read the repo.
+# Override per-job if a future job needs to write (e.g. uploading
+# coverage, creating a release).
+permissions:
+  contents: read
+
 jobs:
   # ---------------------------------------------------------------
   # phpcs — WordPress + PHPCompatibility ruleset.
@@ -53,7 +59,9 @@ jobs:
       fail-fast: false
       matrix:
         php: [ '7.4', '8.3' ]
-        wp:  [ 'latest', '6.5' ]
+        # Test the declared minimum (matches readme.txt `Requires at least`),
+        # a recent stable, and the latest release.
+        wp:  [ '6.0', '6.5', 'latest' ]
 
     services:
       mysql:
