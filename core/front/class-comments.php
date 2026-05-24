@@ -2,7 +2,7 @@
 /**
  * Front end comments controller.
  *
- * Replaces the normal comments output with a React mount point so the
+ * Replaces the normal comments output with a small placeholder so the
  * comments can be lazy loaded on click or scroll. Supports both classic
  * themes (`comments_template()`) and block themes (the `core/comments`
  * block).
@@ -208,7 +208,10 @@ class Comments extends Base {
 	}
 
 	/**
-	 * Enqueue the front end React app.
+	 * Enqueue the front end script and styles.
+	 *
+	 * Vanilla JS, no dependencies — translations are baked into the
+	 * localized payload below so we don't need the `wp-i18n` runtime.
 	 *
 	 * @since 2.0.0
 	 *
@@ -230,7 +233,7 @@ class Comments extends Base {
 			true
 		);
 
-		wp_set_script_translations( self::HANDLE, 'lazy-load-for-comments', LLC_DIR . 'languages' );
+		$button_text = $settings->get( 'button_text' );
 
 		wp_localize_script(
 			self::HANDLE,
@@ -240,11 +243,14 @@ class Comments extends Base {
 				'restUrl'      => rest_url( Endpoint::NAMESPACE . '/comments' ),
 				'restNonce'    => wp_create_nonce( 'wp_rest' ),
 				'method'       => $settings->get( 'load_method', 'scroll' ),
-				'buttonText'   => $settings->get( 'button_text' ),
+				'buttonText'   => '' !== $button_text ? $button_text : __( 'Load Comments', 'lazy-load-for-comments' ),
 				'buttonStyle'  => $settings->get( 'button_style', 'theme' ),
 				'buttonClass'  => $settings->get( 'button_class' ),
 				'showLoader'   => (bool) $settings->get( 'show_loader', true ),
 				'isBlockTheme' => wp_is_block_theme(),
+				'loadingText'  => __( 'Loading comments…', 'lazy-load-for-comments' ),
+				'errorText'    => __( 'Comments could not be loaded.', 'lazy-load-for-comments' ),
+				'retryText'    => __( 'Retry', 'lazy-load-for-comments' ),
 			)
 		);
 
@@ -259,7 +265,12 @@ class Comments extends Base {
 	}
 
 	/**
-	 * Build the React mount point markup.
+	 * Build the placeholder markup the front end script enhances.
+	 *
+	 * Rendered server-side by both the classic comments template and
+	 * the block theme `core/comments` replacement. The vanilla front
+	 * end script targets `#lazy-load-for-comments-frontend` and fills
+	 * it with the button / spinner / loaded comments.
 	 *
 	 * @since 2.0.0
 	 *

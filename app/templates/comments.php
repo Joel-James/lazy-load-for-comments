@@ -3,8 +3,8 @@
  * Classic theme comments template.
  *
  * Loaded in place of the theme's comments.php when lazy loading is
- * active. It only outputs the React mount point — the real comments
- * are fetched from the REST API on click or scroll.
+ * active. It only outputs the lazy load placeholder — the real
+ * comments are fetched from the REST API on click or scroll.
  *
  * @package LazyComments
  */
