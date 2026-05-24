@@ -37,24 +37,28 @@ abstract class Singleton {
 	/**
 	 * Prevent cloning so the single instance contract is preserved.
 	 *
-	 * Marked `final` so subclasses cannot relax the guard.
+	 * Marked `final` so subclasses cannot relax the guard. The `: void`
+	 * return type is intentionally omitted — PHP 7.4 (our minimum
+	 * supported version) rejects return-type declarations on `__clone()`.
 	 *
 	 * @since 2.0.0
 	 *
 	 * @return void
 	 */
-	final public function __clone(): void {}
+	final public function __clone() {}
 
 	/**
 	 * Prevent unserialising so the single instance contract is preserved.
 	 *
-	 * Marked `final` so subclasses cannot relax the guard.
+	 * Marked `final` so subclasses cannot relax the guard. The `: void`
+	 * return type is intentionally omitted — PHP 7.4 rejects return-type
+	 * declarations on `__wakeup()`.
 	 *
 	 * @since 2.0.0
 	 *
 	 * @return void
 	 */
-	final public function __wakeup(): void {}
+	final public function __wakeup() {}
 
 	/**
 	 * Get the single shared instance of the called subclass.
