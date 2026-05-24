@@ -1,0 +1,117 @@
+name: CI
+
+# Run on every push and pull request that targets a long-lived branch.
+on:
+  push:
+    branches: [ main, develop, 'new/**' ]
+  pull_request:
+    branches: [ main, develop ]
+
+# Cancel any in-flight run on the same branch when a new commit lands.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  # ---------------------------------------------------------------
+  # phpcs — WordPress + PHPCompatibility ruleset.
+  # ---------------------------------------------------------------
+  phpcs:
+    name: PHPCS (PHP ${{ matrix.php }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        # Lint on the lowest supported and a recent stable to catch
+        # forward-incompatibility early.
+        php: [ '7.4', '8.3' ]
+
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v4
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          coverage: none
+          tools: composer:v2
+
+      - name: Install Composer dependencies
+        uses: ramsey/composer-install@v3
+
+      - name: Run PHPCS
+        run: composer lint
+
+  # ---------------------------------------------------------------
+  # phpunit — runs against the matrix of (PHP, WordPress) pairs.
+  # ---------------------------------------------------------------
+  phpunit:
+    name: PHPUnit (PHP ${{ matrix.php }} / WP ${{ matrix.wp }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        php: [ '7.4', '8.3' ]
+        wp:  [ 'latest', '6.5' ]
+
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+          MYSQL_DATABASE: wordpress_test
+        ports:
+          - 3306:3306
+        options: --health-cmd="mysqladmin ping" --health-interval=5s --health-timeout=2s --health-retries=10
+
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v4
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          extensions: mysql, mysqli
+          coverage: none
+          tools: composer:v2
+
+      - name: Install Composer dependencies
+        uses: ramsey/composer-install@v3
+
+      - name: Install the WordPress test suite
+        run: bash bin/install-wp-tests.sh wordpress_test root '' 127.0.0.1 ${{ matrix.wp }}
+
+      - name: Run PHPUnit
+        run: composer test
+
+  # ---------------------------------------------------------------
+  # build — make sure the bundled assets compile cleanly.
+  # ---------------------------------------------------------------
+  build:
+    name: Build assets
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+
+      - name: Install npm dependencies
+        run: npm ci
+
+      - name: Build the bundles
+        run: npm run build
+
+      - name: Verify the build directory is non-empty
+        run: |
+          test -d build
+          test "$(ls -A build)"
+          echo "Built files:"
+          ls -la build/

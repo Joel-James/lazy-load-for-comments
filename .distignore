@@ -1,0 +1,48 @@
+# Files excluded from the WP.org-ready ZIP built by `wp dist-archive`.
+# Mirrors .gitattributes, in the wp-cli-compatible format (one entry
+# per line, no leading slash, glob-style matching).
+#
+# The released ZIP contains only the runtime files needed to run the
+# plugin — `includes/`, `build/`, `templates/`, `languages/`, the
+# bootstrap PHP, the readme files, the license and uninstall.php.
+
+# Dev tooling configuration.
+.editorconfig
+.eslintrc
+.prettierrc.js
+.gitattributes
+.gitignore
+.distignore
+
+# Version control & CI.
+.git
+.github
+
+# Composer & npm sources / lockfiles / dev deps.
+composer.json
+composer.lock
+node_modules
+package.json
+package-lock.json
+
+# PHP and JS source the bundled assets are built from.
+assets
+
+# QA tooling and outputs.
+phpcs.xml.dist
+phpunit.xml.dist
+.phpcs.cache
+coverage
+tests
+bin
+
+# Markdown that is GitHub-only (`readme.txt` is the WP.org-facing one).
+CHANGELOG.md
+CONTRIBUTING.md
+PULL_REQUEST_TEMPLATE.md
+README.md
+SECURITY.md
+
+# OS noise.
+.DS_Store
+*.log

@@ -10,10 +10,10 @@
   "license": "GPL-2.0+",
   "main": "lazy-load-for-comments.php",
   "scripts": {
-    "build": "wp-scripts build app/src/settings.js app/src/frontend.js --output-path=app/assets",
-    "start": "wp-scripts start app/src/settings.js app/src/frontend.js --output-path=app/assets",
-    "lint:js": "wp-scripts lint-js app/src",
-    "format": "wp-scripts format app/src"
+    "build": "wp-scripts build assets/src/settings.js assets/src/frontend.js --output-path=build",
+    "start": "wp-scripts start assets/src/settings.js assets/src/frontend.js --output-path=build",
+    "lint:js": "wp-scripts lint-js assets/src",
+    "format": "wp-scripts format assets/src"
   },
   "dependencies": {
     "clsx": "^2.1.1"

@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<phpunit
+	bootstrap="tests/phpunit/bootstrap.php"
+	backupGlobals="false"
+	colors="true"
+	convertErrorsToExceptions="true"
+	convertNoticesToExceptions="true"
+	convertWarningsToExceptions="true"
+	convertDeprecationsToExceptions="true"
+	beStrictAboutTestsThatDoNotTestAnything="true"
+>
+	<testsuites>
+		<testsuite name="Lazy Load for Comments">
+			<directory suffix=".php">./tests/phpunit/</directory>
+		</testsuite>
+	</testsuites>
+
+	<coverage processUncoveredFiles="true">
+		<include>
+			<directory suffix=".php">./includes</directory>
+		</include>
+		<exclude>
+			<directory>./vendor</directory>
+			<directory>./node_modules</directory>
+			<directory>./build</directory>
+		</exclude>
+		<report>
+			<html outputDirectory="coverage" lowUpperBound="35" highLowerBound="70"/>
+			<text outputFile="php://stdout" showOnlySummary="true"/>
+		</report>
+	</coverage>
+</phpunit>

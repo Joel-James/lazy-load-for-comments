@@ -1,0 +1,85 @@
+<?xml version="1.0"?>
+<ruleset name="LazyLoadForComments">
+	<description>Coding standards for the Lazy Load for Comments plugin.</description>
+
+	<!--
+		Paths scanned by phpcs. Tests scaffold is included so test
+		files get linted too. Build output, vendor and node_modules are
+		excluded — they are generated, not authored.
+	-->
+	<file>./lazy-load-for-comments.php</file>
+	<file>./uninstall.php</file>
+	<file>./includes</file>
+	<file>./templates</file>
+	<file>./tests/phpunit</file>
+
+	<!-- Directories that must never be linted. -->
+	<exclude-pattern>*/vendor/*</exclude-pattern>
+	<exclude-pattern>*/node_modules/*</exclude-pattern>
+	<exclude-pattern>*/build/*</exclude-pattern>
+	<exclude-pattern>*/assets/*</exclude-pattern>
+	<exclude-pattern>*/languages/*</exclude-pattern>
+
+	<!-- Show progress, sniff codes and coloured output. -->
+	<arg value="ps"/>
+	<arg name="colors"/>
+	<arg name="extensions" value="php"/>
+
+	<!-- Use all available CPU cores. -->
+	<arg name="parallel" value="8"/>
+
+	<!-- Cache results between runs. -->
+	<arg name="cache" value=".phpcs.cache"/>
+
+	<!-- Use the WordPress and WordPress-Extra rulesets. -->
+	<rule ref="WordPress">
+		<!--
+			Allow short array syntax (`[]`). Modern WPCS still accepts
+			both `array()` and `[]`; we prefer `array()` for consistency
+			with the rest of the WordPress ecosystem but do not enforce.
+		-->
+		<exclude name="Generic.Arrays.DisallowShortArraySyntax"/>
+
+		<!--
+			File-name rule conflicts with our `interface-foo.php`
+			naming. WPCS expects `class-foo.php` for both classes and
+			interfaces.
+		-->
+		<exclude name="WordPress.Files.FileName.InvalidClassFileName"/>
+	</rule>
+	<rule ref="WordPress-Extra"/>
+
+	<!-- Enforce WP-style hyphenated, lowercase file names. -->
+	<rule ref="WordPress.Files.FileName">
+		<properties>
+			<property name="strict_class_file_names" value="false"/>
+		</properties>
+	</rule>
+
+	<!-- Set the project's text domain. -->
+	<rule ref="WordPress.WP.I18n">
+		<properties>
+			<property name="text_domain" type="array">
+				<element value="lazy-load-for-comments"/>
+			</property>
+		</properties>
+	</rule>
+
+	<!-- Project prefix for hooks and globals. -->
+	<rule ref="WordPress.NamingConventions.PrefixAllGlobals">
+		<properties>
+			<property name="prefixes" type="array">
+				<element value="lazy_load_for_comments"/>
+				<element value="LLC_"/>
+				<element value="DuckDev\LazyComments"/>
+			</property>
+		</properties>
+	</rule>
+
+	<!-- PHP compatibility — minimum 7.4. -->
+	<config name="testVersion" value="7.4-"/>
+	<rule ref="PHPCompatibilityWP"/>
+
+	<!-- WordPress minimum version. -->
+	<config name="minimum_wp_version" value="6.0"/>
+</ruleset>

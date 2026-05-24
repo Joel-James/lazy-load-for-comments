@@ -1,5 +1,17 @@
+# Dependencies — restored by `composer install` and `npm ci`.
+/vendor/
 node_modules/
+
+# Built bundles — produced by `npm run build`, never committed.
+/build/
+
+# Tool caches.
+/.phpcs.cache
+/coverage/
+
+# OS noise.
 .DS_Store
 *.log
-app/assets
+
+# npm lockfile is intentionally not tracked.
 package-lock.json
