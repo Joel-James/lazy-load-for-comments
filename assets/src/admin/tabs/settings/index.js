@@ -3,9 +3,9 @@ import LoadButton from './load-button'
 import Cache from './cache'
 
 /**
- * General settings tab — loading behaviour + cache management.
+ * Settings tab — loading behaviour + cache management.
  */
-const General = () => (
+const Settings = () => (
 	<>
 		<LoadingBehaviour />
 		<LoadButton />
@@ -13,4 +13,4 @@ const General = () => (
 	</>
 )
 
-export default General
+export default Settings

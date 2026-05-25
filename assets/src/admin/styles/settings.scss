@@ -88,9 +88,34 @@ $prefix: 'llc';
 	}
 }
 
-.#{$prefix}-notices {
+// Centre the snackbar list horizontally on `#wpcontent` (the area to the
+// right of the admin sidebar) so notices line up with the centred page
+// body. We shrink the list to its content width, then translate it back
+// by half its own width — that's the standard centring trick. The
+// `calc()` accounts for the admin sidebar so the centre point lands on
+// the content area, not the full viewport.
+//
+// Sidebar widths: 160px expanded, 36px folded, 0 on mobile (overlay).
+.components-snackbar-list.#{$prefix}-notices {
 	position: fixed;
+	top: auto;
+	right: auto;
 	bottom: 20px;
-	left: 20px;
+	left: calc(50% + 80px);  // 50% + (sidebar / 2)
+	width: max-content;
+	max-width: calc(100vw - 200px);
+	transform: translateX(-50%);
 	z-index: 100000;
+}
+
+.folded .components-snackbar-list.#{$prefix}-notices {
+	left: calc(50% + 18px);  // 50% + (36px / 2)
+	max-width: calc(100vw - 76px);
+}
+
+@media (max-width: 782px) {
+	.components-snackbar-list.#{$prefix}-notices {
+		left: 50%;
+		max-width: calc(100vw - 40px);
+	}
 }

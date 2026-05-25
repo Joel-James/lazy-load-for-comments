@@ -18,6 +18,9 @@
 .git
 .github
 
+# Packed ZIPs (output of `npm run pack`).
+releases
+
 # Composer & npm sources / lockfiles / dev deps.
 composer.json
 composer.lock

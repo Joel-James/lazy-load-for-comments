@@ -1,5 +1,5 @@
 import { __ } from '@wordpress/i18n'
-import General from './general'
+import Settings from './settings'
 import Support from './support'
 
 /**
@@ -8,9 +8,9 @@ import Support from './support'
  * New tabs (including future addons) only need to be added here.
  */
 const tabs = {
-	general: {
-		label: __('General', 'lazy-load-for-comments'),
-		component: General,
+	settings: {
+		label: __('Settings', 'lazy-load-for-comments'),
+		component: Settings,
 	},
 	support: {
 		label: __('Support', 'lazy-load-for-comments'),

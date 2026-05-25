@@ -14,13 +14,13 @@ import Notices from './components/notices'
  */
 const App = () => {
 	const { hasLoaded } = useSettings()
-	const [current, setCurrent] = useState('general')
+	const [current, setCurrent] = useState('settings')
 
 	const navs = Object.fromEntries(
 		Object.entries(tabs).map(([key, tab]) => [key, tab.label]),
 	)
 
-	const ActiveTab = (tabs[current] || tabs.general).component
+	const ActiveTab = (tabs[current] || tabs.settings).component
 
 	return (
 		<>
