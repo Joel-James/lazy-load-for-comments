@@ -10,7 +10,7 @@ const SUPPORT_LINKS = [
 	{
 		label: __('Documentation', 'lazy-load-for-comments'),
 		icon: 'admin-page',
-		href: 'https://docs.duckdev.com/lazy-load-for-comments/general',
+		href: 'https://docs.duckdev.com/lazy-load-for-comments/',
 	},
 	{
 		label: __('Support Forums', 'lazy-load-for-comments'),

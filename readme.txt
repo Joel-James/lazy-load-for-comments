@@ -34,7 +34,7 @@ Version 2.0 is a complete rewrite. It uses the WordPress REST API to fetch the r
 **Useful links**
 
 * [Plugin website](https://duckdev.com/product/lazy-load-for-comments/)
-* [Documentation](https://docs.duckdev.com/lazy-load-for-comments/general)
+* [Documentation](https://docs.duckdev.com/lazy-load-for-comments/)
 * [Support forum](https://wordpress.org/support/plugin/lazy-load-for-comments/)
 
 == Installation ==
@@ -51,7 +51,7 @@ Version 2.0 is a complete rewrite. It uses the WordPress REST API to fetch the r
 2. Activate the plugin from the *Plugins* screen.
 3. Open *Comments → Lazy Load* to configure the settings.
 
-For the full configuration guide, see the [official documentation](https://docs.duckdev.com/lazy-load-for-comments/general).
+For the full configuration guide, see the [official documentation](https://docs.duckdev.com/lazy-load-for-comments/loading-behaviour).
 
 == Frequently Asked Questions ==
 
@@ -94,7 +94,7 @@ Yes. By default the plugin detects search-engine crawlers from the User-Agent an
 
 = Where can I get help? =
 
-The [official documentation](https://docs.duckdev.com/lazy-load-for-comments/general) covers most setups. For everything else, the free [WordPress.org support forum](https://wordpress.org/support/plugin/lazy-load-for-comments/) is the best place to start.
+The [official documentation](https://docs.duckdev.com/lazy-load-for-comments/) covers most setups. For everything else, the free [WordPress.org support forum](https://wordpress.org/support/plugin/lazy-load-for-comments/) is the best place to start.
 
 == Screenshots ==
 

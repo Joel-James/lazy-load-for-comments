@@ -19,6 +19,6 @@ Lazy Load for Comments is a lightweight WordPress plugin that defers loading the
 ## Useful Links
 
 * [See the FAQ](https://wordpress.org/plugins/lazy-load-for-comments/#faq-header).
-* [See the documentation](https://docs.duckdev.com/lazy-load-for-comments/general).
+* [See the documentation](https://docs.duckdev.com/lazy-load-for-comments/).
 * [See the changelog](https://wordpress.org/plugins/lazy-load-for-comments/changelog/).
 * [See the contributing guidelines](https://github.com/Joel-James/lazy-load-for-comments?tab=contributing-ov-file).
