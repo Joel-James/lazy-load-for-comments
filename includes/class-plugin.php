@@ -21,8 +21,6 @@ namespace DuckDev\LazyComments;
 // If this file is called directly, abort.
 defined( 'ABSPATH' ) || exit;
 
-use DuckDev\LazyComments\Utils\Assets;
-
 /**
  * Class Plugin
  *
@@ -102,19 +100,5 @@ class Plugin {
 	 */
 	public static function screen_id(): string {
 		return 'comments_page_' . self::PAGE;
-	}
-
-	/**
-	 * Backward-compatible alias for {@see Assets::manifest()}.
-	 *
-	 * @since      2.0.0
-	 * @deprecated 2.0.0 Use {@see \DuckDev\LazyComments\Utils\Assets::manifest()} instead.
-	 *
-	 * @param string $handle Asset handle (e.g. `frontend`, `settings`).
-	 *
-	 * @return array{dependencies: string[], version: string}
-	 */
-	public static function asset( string $handle ): array {
-		return Assets::manifest( $handle );
 	}
 }

@@ -83,8 +83,11 @@ $prefix: 'llc';
 	}
 
 	.#{$prefix}-footer {
-		margin: 0 0 2rem;
+		position: sticky;
+		bottom: 1rem;
+		margin: 2rem 0 0;
 		text-align: center;
+		z-index: 10;
 	}
 }
 
@@ -95,12 +98,15 @@ $prefix: 'llc';
 // `calc()` accounts for the admin sidebar so the centre point lands on
 // the content area, not the full viewport.
 //
+// Anchored to the top so it never collides with the sticky Save button.
+// `top: 52px` clears the 32px admin bar with a little breathing room.
+//
 // Sidebar widths: 160px expanded, 36px folded, 0 on mobile (overlay).
 .components-snackbar-list.#{$prefix}-notices {
 	position: fixed;
-	top: auto;
+	bottom: auto;
 	right: auto;
-	bottom: 20px;
+	top: 52px;
 	left: calc(50% + 80px);  // 50% + (sidebar / 2)
 	width: max-content;
 	max-width: calc(100vw - 200px);
@@ -113,8 +119,11 @@ $prefix: 'llc';
 	max-width: calc(100vw - 76px);
 }
 
+// The WP admin bar grows to 46px below 782px, so push the snackbar down
+// a little further to keep the breathing room.
 @media (max-width: 782px) {
 	.components-snackbar-list.#{$prefix}-notices {
+		top: 66px;
 		left: 50%;
 		max-width: calc(100vw - 40px);
 	}

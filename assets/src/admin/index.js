@@ -14,13 +14,19 @@ import Notices from './components/notices'
  */
 const App = () => {
 	const { hasLoaded } = useSettings()
-	const [current, setCurrent] = useState('settings')
+
+	// First registered tab is the landing tab, so renames in `tabs/index.js`
+	// don't silently break the default state here.
+	const tabKeys = Object.keys(tabs)
+	const defaultKey = tabKeys[0]
+
+	const [current, setCurrent] = useState(defaultKey)
 
 	const navs = Object.fromEntries(
 		Object.entries(tabs).map(([key, tab]) => [key, tab.label]),
 	)
 
-	const ActiveTab = (tabs[current] || tabs.settings).component
+	const ActiveTab = (tabs[current] || tabs[defaultKey]).component
 
 	return (
 		<>

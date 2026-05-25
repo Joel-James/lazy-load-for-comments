@@ -22,6 +22,7 @@ defined( 'WP_UNINSTALL_PLUGIN' ) || exit;
 
 // Drop the plugin's option rows.
 delete_option( 'lazy_load_for_comments_settings' );
+delete_option( 'lazy_load_for_comments_cache_index' );
 delete_option( 'lazy_load_comments' );
 
 global $wpdb;

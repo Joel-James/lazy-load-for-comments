@@ -47,7 +47,7 @@ Go to *Comments > Lazy Load* and choose between "On scroll", "On button click" o
 
 = How do I change the button text or styling? =
 
-The button text and extra CSS classes can be set on the *Load Button* tab of the settings page.
+The button text and extra CSS classes can be set under *Load Button* on the *Settings* tab of the plugin settings page.
 
 = How can I disable lazy loading for specific posts? =
 

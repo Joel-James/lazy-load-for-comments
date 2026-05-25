@@ -16,6 +16,7 @@ defined( 'ABSPATH' ) || exit;
 
 use WP_REST_Response;
 use DuckDev\LazyComments\Cache\BlockCache;
+use DuckDev\LazyComments\Utils\Permission;
 
 /**
  * Class Cache
@@ -47,14 +48,18 @@ class Cache extends Endpoint {
 	}
 
 	/**
-	 * Only administrators can clear the cache.
+	 * Only users who pass the plugin's access check can clear the cache.
+	 *
+	 * Delegates to {@see Permission::has_access()} so the capability and
+	 * the access decision both flow through the plugin's filters
+	 * (`lazy_load_for_comments_capability`, `lazy_load_for_comments_has_access`).
 	 *
 	 * @since 2.0.0
 	 *
 	 * @return bool
 	 */
 	public function permission(): bool {
-		return current_user_can( 'manage_options' );
+		return Permission::has_access();
 	}
 
 	/**

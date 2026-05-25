@@ -43,6 +43,24 @@ class BlockCache {
 	const PREFIX = 'llc_comments_block_';
 
 	/**
+	 * Option key for the index of post IDs that currently have a cached
+	 * block transient stored.
+	 *
+	 * We keep this index so {@see BlockCache::flush_all()} can iterate
+	 * the known keys and delete them through the transient API, instead
+	 * of relying on a `wp_options` `LIKE` query. The latter only sees
+	 * DB-backed transients and silently misses every site running a
+	 * persistent object cache (Redis, Memcached, hosts like Pantheon /
+	 * WP Engine), where transients live in the object cache instead.
+	 *
+	 * The index is stored with `autoload = no` so it never bloats the
+	 * autoloaded-options payload.
+	 *
+	 * @since 2.0.0
+	 */
+	const INDEX_KEY = 'lazy_load_for_comments_cache_index';
+
+	/**
 	 * How long a cached block stays valid before WordPress garbage
 	 * collects the transient.
 	 *
@@ -91,11 +109,22 @@ class BlockCache {
 	 * @return bool True when the transient was stored.
 	 */
 	public static function set( int $post_id, string $block ): bool {
-		return set_transient( self::key( $post_id ), $block, self::TTL );
+		$stored = set_transient( self::key( $post_id ), $block, self::TTL );
+
+		if ( $stored ) {
+			self::index_add( $post_id );
+		}
+
+		return $stored;
 	}
 
 	/**
 	 * Delete every cached entry stored by this cache.
+	 *
+	 * Iterates the post-ID index and deletes each transient through the
+	 * standard WordPress API — that way the flush works regardless of
+	 * whether the transient lives in `wp_options` or in a persistent
+	 * object cache.
 	 *
 	 * Run on `switch_theme` and on demand from the cache REST endpoint.
 	 *
@@ -104,23 +133,47 @@ class BlockCache {
 	 * @return void
 	 */
 	public static function flush_all(): void {
-		global $wpdb;
-
-		// Find every stored transient by its option_name. WordPress
-		// stores transients with an `_transient_` prefix in front of
-		// the actual key, so the LIKE pattern accounts for that.
-		// phpcs:ignore WordPress.DB.DirectDatabaseQuery
-		$options = $wpdb->get_col(
-			$wpdb->prepare(
-				"SELECT option_name FROM {$wpdb->options} WHERE option_name LIKE %s",
-				$wpdb->esc_like( '_transient_' . self::PREFIX ) . '%'
-			)
-		);
-
-		// Delete via the WordPress API so the object cache is
-		// invalidated alongside the database row.
-		foreach ( $options as $option ) {
-			delete_transient( substr( $option, strlen( '_transient_' ) ) );
+		foreach ( self::index() as $post_id ) {
+			delete_transient( self::key( (int) $post_id ) );
 		}
+
+		delete_option( self::INDEX_KEY );
+	}
+
+	/**
+	 * Read the cache index.
+	 *
+	 * @since 2.0.0
+	 *
+	 * @return int[]
+	 */
+	private static function index(): array {
+		$index = get_option( self::INDEX_KEY, array() );
+
+		return is_array( $index ) ? array_values( array_unique( array_map( 'intval', $index ) ) ) : array();
+	}
+
+	/**
+	 * Add a post ID to the cache index if not already present.
+	 *
+	 * Stored with `autoload = no` so the (potentially large) list never
+	 * lands inside WordPress's autoloaded-options payload.
+	 *
+	 * @since 2.0.0
+	 *
+	 * @param int $post_id Post ID.
+	 *
+	 * @return void
+	 */
+	private static function index_add( int $post_id ): void {
+		$index = self::index();
+
+		if ( in_array( $post_id, $index, true ) ) {
+			return;
+		}
+
+		$index[] = $post_id;
+
+		update_option( self::INDEX_KEY, $index, false );
 	}
 }

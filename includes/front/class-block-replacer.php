@@ -63,35 +63,6 @@ class BlockReplacer extends Singleton implements Replacer {
 	}
 
 	/**
-	 * Backward-compatible alias for {@see BlockCache::key()}.
-	 *
-	 * Kept so any external callers (addons, themes) that read the
-	 * transient key directly continue to work.
-	 *
-	 * @since      2.0.0
-	 * @deprecated 2.0.0 Use {@see BlockCache::key()} instead.
-	 *
-	 * @param int $post_id Post ID.
-	 *
-	 * @return string Transient key.
-	 */
-	public static function transient_key( int $post_id ): string {
-		return BlockCache::key( $post_id );
-	}
-
-	/**
-	 * Backward-compatible alias for {@see BlockCache::flush_all()}.
-	 *
-	 * @since      2.0.0
-	 * @deprecated 2.0.0 Use {@see BlockCache::flush_all()} instead.
-	 *
-	 * @return void
-	 */
-	public static function flush_cache(): void {
-		BlockCache::flush_all();
-	}
-
-	/**
 	 * Filter callback: swap the rendered `core/comments` block for the placeholder.
 	 *
 	 * Stashes the parsed block in {@see BlockCache} when caching is
