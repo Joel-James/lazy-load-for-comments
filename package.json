@@ -1,0 +1,25 @@
+{
+  "name": "lazy-load-for-comments",
+  "version": "2.0.0",
+  "private": true,
+  "description": "Lazy load the default WordPress comments on scroll or click to improve page speed.",
+  "author": {
+    "name": "Joel James",
+    "url": "https://duckdev.com"
+  },
+  "license": "GPL-2.0+",
+  "main": "lazy-load-for-comments.php",
+  "scripts": {
+    "build": "wp-scripts build assets/src/settings.js assets/src/frontend.js --output-path=build",
+    "start": "wp-scripts start assets/src/settings.js assets/src/frontend.js --output-path=build",
+    "lint:js": "wp-scripts lint-js assets/src",
+    "format": "wp-scripts format assets/src",
+    "pack": "bash bin/pack.sh"
+  },
+  "dependencies": {
+    "clsx": "^2.1.1"
+  },
+  "devDependencies": {
+    "@wordpress/scripts": "^31.0.0"
+  }
+}

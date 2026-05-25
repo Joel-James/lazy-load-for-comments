@@ -1,0 +1,268 @@
+# Copyright (C) 2026 Joel James
+# This file is distributed under the GPL-2.0+.
+msgid ""
+msgstr ""
+"Project-Id-Version: Lazy Load for Comments 2.0.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/lazy-load-for-comments\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2026-05-25T10:41:52+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.11.0\n"
+"X-Domain: lazy-load-for-comments\n"
+
+#. Plugin Name of the plugin
+#: lazy-load-for-comments.php
+#: includes/admin/class-menu.php:51
+#: includes/admin/class-menu.php:73
+#: assets/src/admin/index.js:34
+msgid "Lazy Load for Comments"
+msgstr ""
+
+#. Plugin URI of the plugin
+#: lazy-load-for-comments.php
+msgid "https://wordpress.org/plugins/lazy-load-for-comments"
+msgstr ""
+
+#. Description of the plugin
+#: lazy-load-for-comments.php
+msgid "Lazy-load the default WordPress comments. Comments are fetched only after the visitor clicks a button or scrolls to the comments area. Works with both classic and block themes."
+msgstr ""
+
+#. Author of the plugin
+#: lazy-load-for-comments.php
+msgid "Joel James"
+msgstr ""
+
+#. Author URI of the plugin
+#: lazy-load-for-comments.php
+msgid "https://duckdev.com/"
+msgstr ""
+
+#: includes/admin/class-links.php:62
+#: assets/src/admin/tabs/index.js:12
+msgid "Settings"
+msgstr ""
+
+#: includes/admin/class-links.php:87
+#: assets/src/admin/tabs/index.js:16
+msgid "Support"
+msgstr ""
+
+#: includes/admin/class-menu.php:52
+msgid "Lazy Load"
+msgstr ""
+
+#: includes/admin/class-menu.php:92
+msgid "Open Lazy Load settings"
+msgstr ""
+
+#: includes/admin/class-menu.php:93
+msgid "Lazy load options have moved to their own page under Comments → Lazy Load."
+msgstr ""
+
+#: includes/api/class-cache.php:78
+#: assets/src/admin/tabs/settings/cache.js:40
+msgid "Comments cache cleared."
+msgstr ""
+
+#: includes/class-settings.php:81
+#: includes/front/class-assets.php:100
+msgid "Load Comments"
+msgstr ""
+
+#: includes/class-settings.php:177
+msgid "Lazy Load for Comments settings."
+msgstr ""
+
+#: includes/front/class-assets.php:105
+msgid "Loading comments…"
+msgstr ""
+
+#: includes/front/class-assets.php:106
+msgid "Comments could not be loaded."
+msgstr ""
+
+#: includes/front/class-assets.php:107
+msgid "Retry"
+msgstr ""
+
+#. translators: 1: required PHP version, 2: current PHP version.
+#: lazy-load-for-comments.php:42
+msgid "Lazy Load for Comments requires PHP %1$s or higher. Your site is running PHP %2$s."
+msgstr ""
+
+#: lazy-load-for-comments.php:94
+msgid "Lazy Load for Comments: Composer dependencies are missing. Run `composer install` inside the plugin directory."
+msgstr ""
+
+#: assets/src/admin/components/footer.js:21
+msgid "Saving…"
+msgstr ""
+
+#: assets/src/admin/components/footer.js:22
+msgid "Save Changes"
+msgstr ""
+
+#: assets/src/admin/hooks/use-settings.js:68
+msgid "Settings saved."
+msgstr ""
+
+#: assets/src/admin/hooks/use-settings.js:75
+msgid "Could not save settings."
+msgstr ""
+
+#: assets/src/admin/tabs/settings/cache.js:45
+msgid "Could not clear the cache."
+msgstr ""
+
+#: assets/src/admin/tabs/settings/cache.js:54
+msgid "Cache"
+msgstr ""
+
+#: assets/src/admin/tabs/settings/cache.js:58
+msgid "Store comments markup in cache"
+msgstr ""
+
+#: assets/src/admin/tabs/settings/cache.js:62
+msgid "Cache the parsed comments block in a transient so the REST endpoint can render it quickly. Turn this off if you are debugging or your comments markup changes frequently."
+msgstr ""
+
+#: assets/src/admin/tabs/settings/cache.js:73
+msgid "Clear the cached comments markup for every post. Useful after editing your theme templates or comment-related blocks."
+msgstr ""
+
+#: assets/src/admin/tabs/settings/cache.js:86
+msgid "Clearing…"
+msgstr ""
+
+#: assets/src/admin/tabs/settings/cache.js:87
+msgid "Clear comments cache"
+msgstr ""
+
+#: assets/src/admin/tabs/settings/load-button.js:16
+msgid "Load Button"
+msgstr ""
+
+#: assets/src/admin/tabs/settings/load-button.js:20
+msgid "These options apply only when the load method is set to \"On button click\"."
+msgstr ""
+
+#: assets/src/admin/tabs/settings/load-button.js:31
+msgid "Button text"
+msgstr ""
+
+#: assets/src/admin/tabs/settings/load-button.js:32
+msgid "Text shown on the button visitors click to load comments."
+msgstr ""
+
+#: assets/src/admin/tabs/settings/load-button.js:44
+msgid "Button style"
+msgstr ""
+
+#: assets/src/admin/tabs/settings/load-button.js:45
+msgid "Inherit your theme button style, or use the plugin built-in style."
+msgstr ""
+
+#: assets/src/admin/tabs/settings/load-button.js:52
+msgid "Inherit theme style"
+msgstr ""
+
+#: assets/src/admin/tabs/settings/load-button.js:59
+msgid "Plugin style"
+msgstr ""
+
+#: assets/src/admin/tabs/settings/load-button.js:70
+msgid "Extra CSS classes"
+msgstr ""
+
+#: assets/src/admin/tabs/settings/load-button.js:71
+msgid "Space separated CSS classes added to the button, e.g. to match your theme."
+msgstr ""
+
+#: assets/src/admin/tabs/settings/loading-behaviour.js:15
+msgid "Loading Behaviour"
+msgstr ""
+
+#: assets/src/admin/tabs/settings/loading-behaviour.js:20
+msgid "Load method"
+msgstr ""
+
+#: assets/src/admin/tabs/settings/loading-behaviour.js:21
+msgid "Choose when the comments should be loaded on a post."
+msgstr ""
+
+#: assets/src/admin/tabs/settings/loading-behaviour.js:28
+msgid "On scroll"
+msgstr ""
+
+#: assets/src/admin/tabs/settings/loading-behaviour.js:32
+msgid "On button click"
+msgstr ""
+
+#: assets/src/admin/tabs/settings/loading-behaviour.js:39
+msgid "Disabled (load normally)"
+msgstr ""
+
+#: assets/src/admin/tabs/settings/loading-behaviour.js:55
+msgid "Minimum comments"
+msgstr ""
+
+#: assets/src/admin/tabs/settings/loading-behaviour.js:56
+msgid "Only lazy load when the post has at least this many comments."
+msgstr ""
+
+#: assets/src/admin/tabs/settings/loading-behaviour.js:72
+msgid "Show loading spinner"
+msgstr ""
+
+#: assets/src/admin/tabs/settings/loading-behaviour.js:73
+msgid "Display a spinner while the comments are being fetched."
+msgstr ""
+
+#: assets/src/admin/tabs/settings/loading-behaviour.js:84
+msgid "Disable for search engines"
+msgstr ""
+
+#: assets/src/admin/tabs/settings/loading-behaviour.js:88
+msgid "Load comments normally for bots and crawlers so they stay indexable."
+msgstr ""
+
+#: assets/src/admin/tabs/support.js:11
+msgid "Documentation"
+msgstr ""
+
+#: assets/src/admin/tabs/support.js:16
+msgid "Support Forums"
+msgstr ""
+
+#: assets/src/admin/tabs/support.js:21
+msgid "Priority Support"
+msgstr ""
+
+#: assets/src/admin/tabs/support.js:31
+msgid "About Us"
+msgstr ""
+
+#: assets/src/admin/tabs/support.js:36
+msgid "WP.org Profile"
+msgstr ""
+
+#: assets/src/admin/tabs/support.js:64
+msgid "Support Information"
+msgstr ""
+
+#: assets/src/admin/tabs/support.js:66
+msgid "Access our detailed documentation to handle most situations. For human feedback or community help, visit our wp.org forum. Premium customers receive priority support by contacting us directly."
+msgstr ""
+
+#: assets/src/admin/tabs/support.js:74
+msgid "About the Author"
+msgstr ""
+
+#: assets/src/admin/tabs/support.js:76
+msgid "Hey, I'm Joel James, a Software Engineer based in Kerala, India. I'm passionate about open source and dedicate a lot of my time to contributing to it. If you like this plugin, I'd encourage you to check out my other WordPress plugins as well!"
+msgstr ""

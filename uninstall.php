@@ -1,24 +1,37 @@
 <?php
-
 /**
- * Fired only when the plugin is un-installed.
+ * Plugin uninstall handler.
  *
- * Removes everything that this plugin added to your db.
+ * Runs when the user clicks "Delete" on the plugin in `wp-admin/plugins.php`.
+ * Removes every database trace the plugin leaves behind:
+ *  - the v2.x settings option,
+ *  - the legacy v1.x option,
+ *  - every cached comments-block transient (and its `_timeout_` companion row).
  *
- * @category   Core
- * @package    LLC
- * @subpackage Uninstaller
- * @author     Joel James <mail@cjoel.com>
- * @license    http://www.gnu.org/licenses/ GNU General Public License
- * @link       https://duckdev.com/products/lazy-load-comments/
+ * Intentionally side-effect-free aside from those `DELETE`s — we keep
+ * the file readable so audits can confirm "deleting the plugin actually
+ * deletes the plugin's data".
+ *
+ * @package LazyComments
  */
-// If uninstall not called from WordPress, then exit. That's it!
 
-defined( 'WP_UNINSTALL_PLUGIN' ) or die( 'Damn it.! Dude you are looking for what?' );
+declare( strict_types = 1 );
 
-// Delete plugin options
-if ( get_option( 'lazy_load_comments' ) ) {
-    delete_option( 'lazy_load_comments' );
-}
+// Exit unless the file was loaded by WordPress's uninstall handler.
+defined( 'WP_UNINSTALL_PLUGIN' ) || exit;
 
-/******* The end. Thanks for using Lazy Load Comments plugin ********/
+// Drop the plugin's option rows.
+delete_option( 'lazy_load_for_comments_settings' );
+delete_option( 'lazy_load_for_comments_cache_index' );
+delete_option( 'lazy_load_comments' );
+
+global $wpdb;
+
+// Drop every cached comments-block transient (value row AND timeout row).
+// Done as a single DELETE because we are tearing down — re-running it
+// through the transient API would only multiply the round-trips.
+$wpdb->query( // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+	"DELETE FROM {$wpdb->options}
+	 WHERE option_name LIKE '\\_transient\\_llc\\_comments\\_block\\_%'
+	    OR option_name LIKE '\\_transient\\_timeout\\_llc\\_comments\\_block\\_%'"
+);

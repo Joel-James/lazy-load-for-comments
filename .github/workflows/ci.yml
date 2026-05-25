@@ -1,0 +1,145 @@
+name: CI
+
+# Run on every push and pull request that targets a long-lived branch.
+on:
+  push:
+    branches: [ main, develop, 'new/**' ]
+  pull_request:
+    branches: [ main, develop ]
+
+# Cancel any in-flight run on the same branch when a new commit lands.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+# Principle of least privilege — every job only needs to read the repo.
+# Override per-job if a future job needs to write (e.g. uploading
+# coverage, creating a release).
+permissions:
+  contents: read
+
+jobs:
+  # ---------------------------------------------------------------
+  # phpcs — WordPress + PHPCompatibility ruleset.
+  # ---------------------------------------------------------------
+  phpcs:
+    name: PHPCS (PHP ${{ matrix.php }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        # Lint on the lowest supported and a recent stable to catch
+        # forward-incompatibility early.
+        php: [ '7.4', '8.3' ]
+
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v4
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          coverage: none
+          tools: composer:v2
+
+      - name: Install Composer dependencies
+        uses: ramsey/composer-install@v3
+
+      - name: Run PHPCS
+        run: composer lint
+
+  # ---------------------------------------------------------------
+  # phpunit — runs against the matrix of (PHP, WordPress) pairs.
+  # ---------------------------------------------------------------
+  phpunit:
+    name: PHPUnit (PHP ${{ matrix.php }} / WP ${{ matrix.wp }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        php: [ '7.4', '8.3' ]
+        # Test the declared minimum (matches readme.txt `Requires at least`),
+        # a recent stable, and the latest release.
+        wp:  [ '6.0', '6.5', 'latest' ]
+        exclude:
+          # WordPress 6.0 was released before PHP 8.2's "dynamic
+          # property" deprecation, and its WP_Object_Cache class was
+          # not annotated with `#[\AllowDynamicProperties]` (that was
+          # added in WP 6.1). Running WP 6.0 on PHP 8.2+ therefore
+          # triggers deprecation notices in WP core that have nothing
+          # to do with our plugin code. WordPress itself never
+          # supported WP 6.0 on PHP 8.2+, so this combination is not
+          # a real-world target.
+          - php: '8.3'
+            wp:  '6.0'
+
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+          MYSQL_DATABASE: wordpress_test
+        ports:
+          - 3306:3306
+        options: --health-cmd="mysqladmin ping" --health-interval=5s --health-timeout=2s --health-retries=10
+
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v4
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          extensions: mysql, mysqli
+          coverage: none
+          tools: composer:v2
+
+      - name: Install Composer dependencies
+        uses: ramsey/composer-install@v3
+
+      - name: Install Subversion
+        # The `ubuntu-latest` runner image no longer ships svn,
+        # but install-wp-tests.sh checks out the WP test suite via svn.
+        run: sudo apt-get update && sudo apt-get install -y --no-install-recommends subversion
+
+      - name: Install the WordPress test suite
+        # The 6th argument (`true`) tells the script to skip the
+        # `CREATE DATABASE` step — the MySQL service container above
+        # already creates `wordpress_test` via `MYSQL_DATABASE`, and
+        # `mysqladmin create` would otherwise fail with "database exists".
+        run: bash bin/install-wp-tests.sh wordpress_test root '' 127.0.0.1 ${{ matrix.wp }} true
+
+      - name: Run PHPUnit
+        run: composer test
+
+  # ---------------------------------------------------------------
+  # build — make sure the bundled assets compile cleanly.
+  # ---------------------------------------------------------------
+  build:
+    name: Build assets
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+
+      - name: Install npm dependencies
+        run: npm ci
+
+      - name: Build the bundles
+        run: npm run build
+
+      - name: Verify the build directory is non-empty
+        run: |
+          test -d build
+          test "$(ls -A build)"
+          echo "Built files:"
+          ls -la build/

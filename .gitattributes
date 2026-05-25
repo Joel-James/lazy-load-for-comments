@@ -1,0 +1,36 @@
+# Files excluded from `git archive` (and any tarball built from it).
+# Useful when producing a clean release ZIP — only the runtime files
+# need to ship, never the dev tooling, tests or CI configuration.
+
+/.editorconfig    export-ignore
+/.eslintrc        export-ignore
+/.prettierrc.js   export-ignore
+/.gitattributes   export-ignore
+/.gitignore       export-ignore
+/.distignore      export-ignore
+/.github          export-ignore
+/assets           export-ignore
+/bin              export-ignore
+/composer.json    export-ignore
+/composer.lock    export-ignore
+/node_modules     export-ignore
+/package.json     export-ignore
+/package-lock.json export-ignore
+/phpcs.xml.dist   export-ignore
+/phpunit.xml.dist export-ignore
+/tests            export-ignore
+/vendor           export-ignore
+
+# Normalise line endings on commit.
+* text=auto eol=lf
+
+# Binary assets — never touch the bytes.
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.woff binary
+*.woff2 binary
+*.ttf binary
+*.eot binary

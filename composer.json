@@ -1,0 +1,53 @@
+{
+    "name": "duckdev/lazy-load-for-comments",
+    "description": "Lazy load the default WordPress comments to improve page speed.",
+    "type": "wordpress-plugin",
+    "license": "GPL-2.0-or-later",
+    "homepage": "https://wordpress.org/plugins/lazy-load-for-comments/",
+    "authors": [
+        {
+            "name": "Joel James",
+            "homepage": "https://duckdev.com/"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/joel-james/lazy-load-for-comments/issues",
+        "source": "https://github.com/joel-james/lazy-load-for-comments",
+        "forum":  "https://wordpress.org/support/plugin/lazy-load-for-comments/"
+    },
+    "require": {
+        "php": ">=7.4",
+        "composer/installers": "^1.0 || ^2.0"
+    },
+    "require-dev": {
+        "wp-coding-standards/wpcs": "^3.0",
+        "phpcompatibility/phpcompatibility-wp": "^2.1",
+        "dealerdirect/phpcodesniffer-composer-installer": "^1.0",
+        "yoast/phpunit-polyfills": "^2.0",
+        "phpunit/phpunit": "^9.6"
+    },
+    "autoload": {
+        "classmap": [
+            "includes/"
+        ]
+    },
+    "scripts": {
+        "lint": "phpcs",
+        "lint:fix": "phpcbf",
+        "test": "phpunit"
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "preferred-install": "dist",
+        "sort-packages": true,
+        "allow-plugins": {
+            "composer/installers": true,
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        },
+        "platform": {
+            "php": "7.4"
+        }
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}

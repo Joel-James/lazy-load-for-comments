@@ -1,0 +1,19 @@
+# Dependencies — restored by `composer install` and `npm ci`.
+/vendor/
+node_modules/
+
+# Built bundles — produced by `npm run build`, never committed.
+/build/
+
+# Packed plugin ZIPs — produced by `npm run pack`.
+/releases/
+
+# Tool caches.
+/.phpcs.cache
+/.phpunit.result.cache
+/coverage/
+
+# OS noise.
+.DS_Store
+*.log
+
