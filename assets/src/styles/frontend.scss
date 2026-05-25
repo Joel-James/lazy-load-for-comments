@@ -1,4 +1,4 @@
-.llc-loader {
+.llc-button-wrap {
 	padding: 1rem 0;
 	text-align: center;
 }
@@ -23,7 +23,7 @@
 }
 
 .llc-spinner {
-	display: inline-flex;
+	display: flex;
 	align-items: center;
 	justify-content: center;
 	padding: 1rem 0;
@@ -46,7 +46,9 @@
 }
 
 .llc-error {
+	padding: 1rem 0;
 	color: #d63638;
+	text-align: center;
 }
 
 .llc-retry {

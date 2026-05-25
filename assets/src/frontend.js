@@ -177,7 +177,12 @@ const createLoader = (mount, config) => {
 		})
 
 		btn.addEventListener('click', load)
-		mount.appendChild(btn)
+
+		// Wrap so the button sits centered without forcing text-align
+		// on the mount (which would bleed into the loaded comments).
+		const wrap = el('div', { className: 'llc-button-wrap' })
+		wrap.appendChild(btn)
+		mount.appendChild(wrap)
 	}
 
 	const load = async () => {
