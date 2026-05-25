@@ -17,7 +17,7 @@ $prefix: 'llc';
 			display: flex;
 			align-items: center;
 			justify-content: center;
-			padding: 1rem 0;
+			padding: 2rem 0 1rem;
 
 			h1 {
 				margin: 0 .5rem;
@@ -56,13 +56,17 @@ $prefix: 'llc';
 	}
 
 	.#{$prefix}-page-body {
-		max-width: 750px;
+		max-width: 780px;
 		margin: 0 auto;
 
 		.components-panel__body {
 			margin: 25px 0;
 			background: #fff;
 			border: 1px solid #e2e4e7;
+
+			&.is-opened > .components-panel__body-title {
+				border-bottom: 1px solid #e2e4e7;
+			}
 		}
 
 		.components-panel__row {

@@ -1,7 +1,7 @@
 import { __ } from '@wordpress/i18n'
 import { useState } from '@wordpress/element'
 import { Placeholder, Spinner } from '@wordpress/components'
-import useSettings from './use-settings'
+import useSettings from './hooks/use-settings'
 import tabs from './tabs'
 import PageHeader from './components/page-header'
 import PageBody from './components/page-body'

@@ -1,7 +1,11 @@
 import { __ } from '@wordpress/i18n'
-import { Button, PanelBody } from '@wordpress/components'
+import {
+	Button,
+	Flex,
+	FlexItem,
+	PanelBody,
+} from '@wordpress/components'
 
-// External support links.
 const SUPPORT_LINKS = [
 	{
 		label: __('Documentation', 'lazy-load-for-comments'),
@@ -20,7 +24,6 @@ const SUPPORT_LINKS = [
 	},
 ]
 
-// Author links.
 const AUTHOR_LINKS = [
 	{
 		href: 'https://duckdev.com/about/',
@@ -34,6 +37,25 @@ const AUTHOR_LINKS = [
 	},
 ]
 
+const LinkRow = ({ links }) => (
+	<Flex className="llc-link-row" gap={2} justify="flex-start" wrap>
+		{links.map((link) => (
+			<FlexItem key={link.href}>
+				<Button
+					__next40pxDefaultSize
+					variant="secondary"
+					target="_blank"
+					rel="noopener noreferrer"
+					icon={link.icon}
+					href={link.href}
+				>
+					{link.label}
+				</Button>
+			</FlexItem>
+		))}
+	</Flex>
+)
+
 /**
  * Support tab — documentation, support forums and author info.
  */
@@ -46,23 +68,7 @@ const Support = () => (
 					'lazy-load-for-comments',
 				)}
 			</p>
-			<div
-				className="llc-button-group"
-				style={{ display: 'flex', gap: '8px', marginTop: '15px' }}
-			>
-				{SUPPORT_LINKS.map((link) => (
-					<Button
-						key={link.href}
-						variant="secondary"
-						target="_blank"
-						rel="noopener noreferrer"
-						icon={link.icon}
-						href={link.href}
-					>
-						{link.label}
-					</Button>
-				))}
-			</div>
+			<LinkRow links={SUPPORT_LINKS} />
 		</PanelBody>
 
 		<PanelBody title={__('About the Author', 'lazy-load-for-comments')}>
@@ -72,23 +78,7 @@ const Support = () => (
 					'lazy-load-for-comments',
 				)}
 			</p>
-			<div
-				className="llc-button-group"
-				style={{ display: 'flex', gap: '8px', marginTop: '15px' }}
-			>
-				{AUTHOR_LINKS.map((link) => (
-					<Button
-						key={link.href}
-						variant="secondary"
-						target="_blank"
-						rel="noopener noreferrer"
-						icon={link.icon}
-						href={link.href}
-					>
-						{link.label}
-					</Button>
-				))}
-			</div>
+			<LinkRow links={AUTHOR_LINKS} />
 		</PanelBody>
 	</>
 )
