@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-05-25T07:43:37+00:00\n"
+"POT-Creation-Date: 2026-05-25T09:13:02+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: lazy-load-for-comments\n"
@@ -18,7 +18,7 @@ msgstr ""
 #: lazy-load-for-comments.php
 #: includes/admin/class-menu.php:51
 #: includes/admin/class-menu.php:73
-#: assets/src/admin/index.js:28
+#: assets/src/admin/index.js:34
 msgid "Lazy Load for Comments"
 msgstr ""
 
@@ -64,7 +64,7 @@ msgstr ""
 msgid "Lazy load options have moved to their own page under Comments → Lazy Load."
 msgstr ""
 
-#: includes/api/class-cache.php:73
+#: includes/api/class-cache.php:78
 #: assets/src/admin/tabs/settings/cache.js:40
 msgid "Comments cache cleared."
 msgstr ""
