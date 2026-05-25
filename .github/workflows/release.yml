@@ -1,0 +1,118 @@
+name: Release
+
+# Two ways to fire:
+#   1. Tag-driven — push `vX.Y.Z` and the workflow packs and publishes.
+#   2. Manual    — run from the Actions UI; the tag is derived from the
+#      plugin header version (`vX.Y.Z`), so the workflow stays idempotent
+#      with the tag-driven path.
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+# Don't let two releases for the same ref step on each other. We do NOT
+# cancel an in-flight release — letting it finish is safer than killing
+# it half-way through `gh release upload`.
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+# Needs `contents: write` to create/update GitHub Releases via the
+# auto-provided `GITHUB_TOKEN`. Everything else stays read-only.
+permissions:
+  contents: write
+
+jobs:
+  release:
+    name: Build and publish release
+    runs-on: ubuntu-latest
+
+    # Skip restoring dev Composer deps inside `bin/pack.sh` — the CI
+    # runner is thrown away immediately afterwards.
+    env:
+      LLC_PACK_SKIP_RESTORE: '1'
+
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v4
+
+      # PHP 7.4 matches the plugin's declared floor (`Requires PHP`).
+      # `tools: composer:v2, wp-cli` gives `composer` and `wp` in one
+      # step — `wp i18n make-pot` inside `pack.sh` needs WP-CLI.
+      - name: Set up PHP and WP-CLI
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '7.4'
+          coverage: none
+          tools: composer:v2, wp-cli
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install Composer dependencies
+        uses: ramsey/composer-install@v3
+
+      - name: Install npm dependencies
+        run: npm ci
+
+      # Tag-driven runs: use the pushed tag.
+      # Dispatch runs:   derive `v<version>` from the plugin header.
+      # Either way, verify the header matches so we never publish a ZIP
+      # with mismatched metadata.
+      - name: Resolve release tag
+        id: version
+        run: |
+          set -euo pipefail
+
+          plugin_version=$(grep -E '^[[:space:]]*\*?[[:space:]]*Version:' lazy-load-for-comments.php \
+            | head -1 | sed -E 's/.*Version:[[:space:]]*//' | tr -d '\r')
+
+          if [[ "${{ github.event_name }}" == "push" ]]; then
+            tag="${{ github.ref_name }}"
+          else
+            tag="v${plugin_version}"
+          fi
+
+          if [[ "${tag#v}" != "${plugin_version}" ]]; then
+            echo "::error::Tag '${tag}' does not match plugin header version '${plugin_version}'."
+            exit 1
+          fi
+
+          echo "tag=${tag}"          >> "$GITHUB_OUTPUT"
+          echo "version=${plugin_version}" >> "$GITHUB_OUTPUT"
+          echo "Resolved tag: ${tag}"
+
+      - name: Pack plugin
+        run: npm run pack
+
+      # `gh release view` returns non-zero when the release is missing,
+      # so the `||` branch handles the "create" path and the success
+      # branch handles "update existing" with `--clobber`.
+      - name: Create or update GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG:     ${{ steps.version.outputs.tag }}
+          VERSION: ${{ steps.version.outputs.version }}
+        run: |
+          set -euo pipefail
+
+          zip="releases/lazy-load-for-comments-${VERSION}.zip"
+
+          if [[ ! -f "$zip" ]]; then
+            echo "::error::Expected ZIP not found at ${zip}."
+            exit 1
+          fi
+
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            echo "Release ${TAG} exists — replacing the ZIP asset."
+            gh release upload "$TAG" "$zip" --clobber
+          else
+            echo "Creating release ${TAG}."
+            gh release create "$TAG" "$zip" \
+              --title "$TAG" \
+              --generate-notes
+          fi

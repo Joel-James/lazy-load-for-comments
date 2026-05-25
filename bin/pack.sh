@@ -37,7 +37,10 @@ restore_dev_deps=false
 cleanup() {
 	[[ -n "$i18n_log" ]] && rm -f "$i18n_log"
 	[[ -n "$stage" ]] && rm -rf "$stage"
-	if [[ "$restore_dev_deps" == true ]]; then
+
+	# CI runners are ephemeral, so restoring dev deps is pure waste there.
+	# Export `LLC_PACK_SKIP_RESTORE=1` from the workflow to opt out.
+	if [[ "$restore_dev_deps" == true && "${LLC_PACK_SKIP_RESTORE:-0}" != "1" ]]; then
 		printf '\n==> Restoring development dependencies\n'
 		composer install --quiet
 	fi
