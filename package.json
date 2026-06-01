@@ -1,6 +1,6 @@
 {
   "name": "lazy-load-for-comments",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "private": true,
   "description": "Lazy load the default WordPress comments on scroll or click to improve page speed.",
   "author": {

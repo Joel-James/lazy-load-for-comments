@@ -5,7 +5,7 @@ Donate link: https://paypal.me/JoelCJ
 Requires at least: 6.0
 Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 2.0.0
+Stable tag: 2.0.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -104,6 +104,10 @@ The [official documentation](https://docs.duckdev.com/lazy-load-for-comments/) c
 
 == Changelog ==
 
+= 2.0.1 =
+
+* Fixed comments not rendering on Genesis and similar classic themes that rely on `comments_template()` populating `comments_by_type`.
+
 = 2.0.0 =
 
 * Complete rewrite using React and the WordPress REST API.
@@ -120,6 +124,10 @@ The [official documentation](https://docs.duckdev.com/lazy-load-for-comments/) c
 * Added compatibility for the Divi theme builder.
 
 == Upgrade Notice ==
+
+= 2.0.1 =
+
+Fixes comments not displaying on Genesis and other classic themes that depend on `comments_template()` populating `comments_by_type`.
 
 = 2.0.0 =
 

@@ -3,7 +3,7 @@
  * Plugin Name:       Lazy Load for Comments
  * Plugin URI:        https://wordpress.org/plugins/lazy-load-for-comments
  * Description:       Lazy-load the default WordPress comments. Comments are fetched only after the visitor clicks a button or scrolls to the comments area. Works with both classic and block themes.
- * Version:           2.0.0
+ * Version:           2.0.1
  * Author:            Joel James
  * Author URI:        https://duckdev.com/
  * Donate link:       https://paypal.me/JoelCJ
@@ -59,7 +59,7 @@ if ( version_compare( PHP_VERSION, '7.4', '<' ) ) {
  */
 
 // Plugin version (kept in sync with the `Version:` header above).
-define( 'LLC_VERSION', '2.0.0' );
+define( 'LLC_VERSION', '2.0.1' );
 
 // Absolute path to this bootstrap file.
 define( 'LLC_FILE', __FILE__ );
