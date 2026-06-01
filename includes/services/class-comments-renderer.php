@@ -132,8 +132,9 @@ class CommentsRenderer {
 			echo do_blocks( $block );
 		} else {
 			// Classic themes fall through to the standard
-			// `comments_template()` lookup.
-			comments_template( '' );
+			// `comments_template()` lookup. Pass true so themes such as
+			// Genesis receive separated comment types in $wp_query.
+			comments_template( '', true );
 		}
 
 		$html = ob_get_clean();
